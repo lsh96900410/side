@@ -24,7 +24,7 @@ public class QMovie extends EntityPathBase<Movie> {
     public final StringPath actor = createString("actor");
 
     //inherited
-    public final ListPath<jpabook.jpashop.domain.Category, jpabook.jpashop.domain.QCategory> categories = _super.categories;
+    public final ListPath<jpabook.jpashop.domain.CategoryItem, jpabook.jpashop.domain.QCategoryItem> categoryItems = _super.categoryItems;
 
     public final StringPath director = createString("director");
 

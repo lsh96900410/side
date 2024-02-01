@@ -30,11 +30,17 @@ dependencies {
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+	/* Spring Security + OAuth2 Login*/
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	testImplementation 'org.springframework.security:spring-security-test'
 
 
 
 
-/**********************   querydsl    ************************/
+
+	/**********************   querydsl    ************************/
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
 	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
 
@@ -58,6 +64,7 @@ dependencies {
 	clean {
 		delete file(querydslSrcDir)
 	}
+	runtimeOnly 'com.mysql:mysql-connector-j'
 	/* java source set 에 querydsl QClass 위치 추가*/
 	sourceSets {
 		main.java.srcDirs += [ querydslSrcDir ]
@@ -65,7 +72,6 @@ dependencies {
 
 
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

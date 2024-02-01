@@ -1,10 +1,11 @@
 package jpabook.jpashop.domain.item;
 
 import jakarta.persistence.*;
-import jpabook.jpashop.domain.Category;
+import jpabook.jpashop.domain.CategoryItem;
+import jpabook.jpashop.dto.item.BookForm;
+import jpabook.jpashop.dto.item.ItemForm;
 import jpabook.jpashop.exception.NotEnoughStockExcption;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,8 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="dtype")
-@Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter //@Setter
 public abstract class Item {
 
     @Id
@@ -24,8 +26,22 @@ public abstract class Item {
     private int price;
     private int stockQuantity;
 
-    @ManyToMany(mappedBy = "items")
-    private List<Category> categories = new ArrayList<>();
+    @OneToMany(mappedBy = "item")
+    private List<CategoryItem> categoryItems = new ArrayList<>();
+
+
+    public void update(BookForm form){
+        this.name=form.getName();
+        this.price=form.getPrice();
+        this.stockQuantity=form.getStockQuantity();
+    }
+
+    public Item(BookForm form){
+        this.name=form.getName();
+        this.price=form.getPrice();
+        this.stockQuantity=form.getStockQuantity();
+    }
+
 
     //==비지니스 로직==//
 

@@ -8,6 +8,7 @@ import jakarta.persistence.criteria.*;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.QMember;
 import jpabook.jpashop.domain.QOrder;
+import jpabook.jpashop.dto.OrderSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -117,7 +118,7 @@ public class OrderRepository {
 
         // 2. 회원 이름 검색
         if(StringUtils.hasText(orderSearch.getMemberName())){
-            builder.and(qOrder.member.name.eq(orderSearch.getMemberName()));
+            builder.and(qOrder.member.username.contains(orderSearch.getMemberName()));
         }
 
         return query.from(qOrder).join(qOrder.member,member).where(builder).fetch();

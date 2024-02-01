@@ -1,38 +1,38 @@
 package jpabook.jpashop.service;
 
 import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.dto.MemberForm;
+import jpabook.jpashop.dto.MemberLogin;
 import jpabook.jpashop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true) // 데이터 변경 X, public -> 기본 적용
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final BCryptPasswordEncoder encoder;
 
     /**
      *  회원 가입
      */
-    @Transactional // 우선순위
-    public Long join(Member member){
-        validateDuplicateMember(member); // 중복 회원 검증
-        memberRepository.save(member);
-        return member.getId(); //@GeneratedValue -> 영속성 컨텍스트의 Key 값으로 사용 될 PK 미리 생성
-    }
+    @Transactional 
+    public Long join(MemberForm form){
+        validateDuplicateMember(form.getUsername());
+        form.setPassword(encoder.encode(form.getPassword()));
+        Member saveMember = new Member(form);
+        memberRepository.save(saveMember);
 
-    private void validateDuplicateMember(Member member) {
-        List<Member> findMembers = memberRepository.findByName(member.getName());
-        if(!findMembers.isEmpty()){
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
-        }
+        return saveMember.getId();
     }
-
 
     // 2. 회원 전체 조회
     public List<Member> findMembers(){
@@ -44,5 +44,25 @@ public class MemberService {
         return memberRepository.findOne(memberId);
     }
 
+    // 4. 로그인
+    public String login(MemberLogin memberLogin) throws Exception{
+        System.out.println("MemberService - login 메쏘드 실행 ");
+        Member findMember = memberRepository.findByName(memberLogin.getUsername());
 
+            if (findMember==null){
+            throw new UsernameNotFoundException("사용자를 찾을 수 없습니다." + memberLogin.getUsername());
+            }
+            if(!encoder.matches(memberLogin.getPassword(),findMember.getPassword())){
+                throw new BadCredentialsException("비밀번호가 틀렸습니다.");
+            }
+            return findMember.getRole();
+    }
+
+    // 중복 회원 검증
+    private void validateDuplicateMember(String name) {
+        Member findMembers = memberRepository.findByName(name);
+        if(findMembers!=null){
+            throw new IllegalStateException("이미 존재하는 회원입니다.");
+        }
+    }
 }

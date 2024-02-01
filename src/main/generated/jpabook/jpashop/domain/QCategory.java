@@ -22,11 +22,11 @@ public class QCategory extends EntityPathBase<Category> {
 
     public static final QCategory category = new QCategory("category");
 
+    public final ListPath<CategoryItem, QCategoryItem> categoryItems = this.<CategoryItem, QCategoryItem>createList("categoryItems", CategoryItem.class, QCategoryItem.class, PathInits.DIRECT2);
+
     public final ListPath<Category, QCategory> child = this.<Category, QCategory>createList("child", Category.class, QCategory.class, PathInits.DIRECT2);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
-
-    public final ListPath<jpabook.jpashop.domain.item.Item, jpabook.jpashop.domain.item.QItem> items = this.<jpabook.jpashop.domain.item.Item, jpabook.jpashop.domain.item.QItem>createList("items", jpabook.jpashop.domain.item.Item.class, jpabook.jpashop.domain.item.QItem.class, PathInits.DIRECT2);
 
     public final StringPath name = createString("name");
 

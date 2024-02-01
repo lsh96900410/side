@@ -1,24 +1,30 @@
 package jpabook.jpashop.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
-@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Delivery {
 
     @Id @GeneratedValue
     @Column(name="delivery_id")
     private Long id;
 
+    @Setter(AccessLevel.PROTECTED)
     @OneToOne(mappedBy = "delivery",fetch = FetchType.LAZY)
     private Order order;
 
     @Embedded
     private Address address;
 
-    @Enumerated(EnumType.STRING) //Ordinal X -> 인덱스처럼 입력 되는데 유지 보수 어려움
+    @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
+
+    @Builder
+    public Delivery(Address address){
+        this.address=address;
+    }
+
 }

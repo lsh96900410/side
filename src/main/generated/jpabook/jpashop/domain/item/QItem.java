@@ -20,7 +20,7 @@ public class QItem extends EntityPathBase<Item> {
 
     public static final QItem item = new QItem("item");
 
-    public final ListPath<jpabook.jpashop.domain.Category, jpabook.jpashop.domain.QCategory> categories = this.<jpabook.jpashop.domain.Category, jpabook.jpashop.domain.QCategory>createList("categories", jpabook.jpashop.domain.Category.class, jpabook.jpashop.domain.QCategory.class, PathInits.DIRECT2);
+    public final ListPath<jpabook.jpashop.domain.CategoryItem, jpabook.jpashop.domain.QCategoryItem> categoryItems = this.<jpabook.jpashop.domain.CategoryItem, jpabook.jpashop.domain.QCategoryItem>createList("categoryItems", jpabook.jpashop.domain.CategoryItem.class, jpabook.jpashop.domain.QCategoryItem.class, PathInits.DIRECT2);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 

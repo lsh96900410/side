@@ -24,7 +24,7 @@ public class QBook extends EntityPathBase<Book> {
     public final StringPath author = createString("author");
 
     //inherited
-    public final ListPath<jpabook.jpashop.domain.Category, jpabook.jpashop.domain.QCategory> categories = _super.categories;
+    public final ListPath<jpabook.jpashop.domain.CategoryItem, jpabook.jpashop.domain.QCategoryItem> categoryItems = _super.categoryItems;
 
     //inherited
     public final NumberPath<Long> id = _super.id;

@@ -24,13 +24,19 @@ public class QMember extends EntityPathBase<Member> {
 
     public final QAddress address;
 
+    public final StringPath email = createString("email");
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final StringPath name = createString("name");
-
-    public final ListPath<Order, QOrder> orders = this.<Order, QOrder>createList("orders", Order.class, QOrder.class, PathInits.DIRECT2);
-
     public final StringPath password = createString("password");
+
+    public final StringPath provider = createString("provider");
+
+    public final StringPath providerId = createString("providerId");
+
+    public final StringPath role = createString("role");
+
+    public final StringPath username = createString("username");
 
     public QMember(String variable) {
         this(Member.class, forVariable(variable), INITS);
