@@ -1,4 +1,4 @@
-package jpabook.jpashop.dto.item;
+package jpabook.jpashop.dto;
 
 public class FindItemDto {
 

@@ -17,7 +17,6 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     private final Map<String,Object> attributes ;
 
     public PrincipalDetails(Member member) {
-        System.out.println("생성은 돼.....??? ㅜㅜㅜㅜㅜㅜㅜㅜㅜㅜ");
         this.member=member;
         this.attributes=new HashMap<>();
     }
@@ -47,7 +46,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     @Override
     public String getUsername() {
-        return member.getUsername();
+        return member.getEmail();
     }
 
     @Override

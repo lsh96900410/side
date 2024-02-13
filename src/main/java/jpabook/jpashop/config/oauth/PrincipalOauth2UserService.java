@@ -26,28 +26,25 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService{
 	@Transactional
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+		System.out.println("principalOauth2UserService loadUser 메쏘드" + userRequest.getClientRegistration().getRegistrationId());
+
 		OAuth2User oAuth2User = super.loadUser(userRequest);
 		OAuth2UserInfo oAuth2UserInfo = null;
 		if(userRequest.getClientRegistration().getRegistrationId().equals("google")) {
-			System.out.println("google");
 			oAuth2UserInfo=new GoogleUserInfo(oAuth2User.getAttributes());
 		}else if(userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
-			System.out.println("facebook");
 			oAuth2UserInfo=new FacebookUserInfo(oAuth2User.getAttributes());
 		}else if(userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
-			System.out.println("naver");
 			oAuth2UserInfo=new NaverUserInfo((Map)oAuth2User.getAttributes().get("response"));
 		}else {
-			 System.out.println("sss");
 		}
 		String password = bCryptPasswordEncoder.encode("skydog");
-		String username=oAuth2UserInfo.getProvider()+"_"+oAuth2UserInfo.getProviderId();
-		Member findMember = memberRepository.findByName(username);
+		Member findMember = memberRepository.findByName(oAuth2UserInfo.getEmail());
 
 		if(findMember==null) {
 			Member member=new Member(oAuth2UserInfo,password);
 			memberRepository.save(member);
-		}else {
+			return new PrincipalDetails(member);
 		}
 		return new PrincipalDetails(findMember, oAuth2User.getAttributes());
 	}

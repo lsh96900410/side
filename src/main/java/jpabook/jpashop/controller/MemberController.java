@@ -3,8 +3,10 @@ package jpabook.jpashop.controller;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jpabook.jpashop.config.auth.PrincipalDetails;
+import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.dto.MemberForm;
 import jpabook.jpashop.dto.MemberLogin;
+import jpabook.jpashop.dto.MemberSearch;
 import jpabook.jpashop.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -38,11 +42,8 @@ public class MemberController {
 
     @PostMapping("/members/login")
     public String login(@ModelAttribute MemberLogin memberLogin, HttpSession session,Model model){
-        System.out.println("members/login !@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@!");
         try {
-            String result = memberService.login(memberLogin);
-            session.setAttribute("id",memberLogin.getUsername());
-            session.setAttribute("role",result);
+            memberService.login(memberLogin);
             return "redirect:/";
         } catch (UsernameNotFoundException e) {
             model.addAttribute("loginForm",memberLogin);
@@ -62,7 +63,6 @@ public class MemberController {
     @PostMapping("/members/new")
     public String create(@Valid MemberForm form, BindingResult result){
 
-        // form 객체 데이터도 같이 가져감
         if(result.hasErrors()) return "members/createMemberForm";
 
         memberService.join(form);
@@ -72,12 +72,16 @@ public class MemberController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @GetMapping("/members")
-    public String list(@AuthenticationPrincipal PrincipalDetails psd, Model model){
-        System.out.println("@@@@ Members.. Admin 이여햐마 "+psd.getAuthorities().contains("ROLE_ADMIN"));
-        model.addAttribute("members",memberService.findMembers());
+    public String list(@AuthenticationPrincipal PrincipalDetails psd,
+                       @ModelAttribute("memberSearch") MemberSearch memberSearch, Model model){
+        model.addAttribute("members",memberService.searchMembers(memberSearch));
         return "members/memberList";
     }
 
+    @GetMapping("/members/search")
+    public @ResponseBody List<Member> list(@ModelAttribute("memberSearch") MemberSearch memberSearch){
+        return memberService.searchMembers(memberSearch);
+    }
     @GetMapping("/members/{memberId}")
     public String one(@PathVariable("memberId") Long id , Model model){
         model.addAttribute("member",memberService.findOne(id));

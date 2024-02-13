@@ -44,7 +44,7 @@ public class Member {
     public Member(OAuth2UserInfo info,String password){
         this.email=info.getEmail();
         this.password=password;
-        this.username=info.getProvider()+"_"+info.getProviderId();
+        this.username=info.getEmail();
         this.password=password;
         this.role="ROLE_USER";
         this.provider=info.getProvider();

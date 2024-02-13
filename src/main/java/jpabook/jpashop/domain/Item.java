@@ -1,21 +1,16 @@
-package jpabook.jpashop.domain.item;
+package jpabook.jpashop.domain;
 
 import jakarta.persistence.*;
-import jpabook.jpashop.domain.CategoryItem;
-import jpabook.jpashop.dto.item.BookForm;
-import jpabook.jpashop.dto.item.ItemForm;
-import jpabook.jpashop.exception.NotEnoughStockExcption;
+import jpabook.jpashop.dto.ItemForm;
+import jpabook.jpashop.exception.NotEnoughStockException;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="dtype")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter //@Setter
-public abstract class Item {
+@Getter
+public class Item {
 
     @Id
     @GeneratedValue
@@ -26,17 +21,13 @@ public abstract class Item {
     private int price;
     private int stockQuantity;
 
-    @OneToMany(mappedBy = "item")
-    private List<CategoryItem> categoryItems = new ArrayList<>();
-
-
-    public void update(BookForm form){
+    public void update(ItemForm form){
         this.name=form.getName();
         this.price=form.getPrice();
         this.stockQuantity=form.getStockQuantity();
     }
 
-    public Item(BookForm form){
+    public Item(ItemForm form){
         this.name=form.getName();
         this.price=form.getPrice();
         this.stockQuantity=form.getStockQuantity();
@@ -58,7 +49,7 @@ public abstract class Item {
     public void removeStock(int quantity){
         int restStock =this.stockQuantity-quantity;
 
-        if(restStock <0) throw new NotEnoughStockExcption("Need more stock");
+        if(restStock <0) throw new NotEnoughStockException("Need more stock");
 
         this.stockQuantity = restStock;
     }

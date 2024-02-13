@@ -17,9 +17,6 @@ public class HomeController {
 
     @RequestMapping("/")
     public String home(HttpSession session){
-        System.out.println((String) session.getAttribute("role"));
-        System.out.println((String) session.getAttribute("id"));
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ home Controller");
         return "home";
     }
 }

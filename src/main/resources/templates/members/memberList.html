@@ -1,15 +1,43 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/header :: header" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
     <div>
+        <div>
+            <form th:object="${memberSearch}" class="form-inline">
+                <div class="form-group mb-2">
+                    <input type="text" th:field="*{username}" class="formcontrol" placeholder="회원명"/>
+                </div>
+                <div class="form-group mx-sm-1 mb-2">
+                    <select th:field="*{role}" class="form-control">
+                        <option value="">등급</option>
+                        <option th:value="ROLE_ADMIN">관리자</option>
+                        <option th:value="ROLE_MANAGER">매니저</option>
+                        <option th:value="ROLE_USER">일반</option>
+                    </select>
+                </div>
+                <div class="form-group mx-sm-1 mb-2">
+                    <select th:field="*{provider}" class="form-control">
+                        <option value="">SNS</option>
+                        <option th:value="google">구글</option>
+                        <option th:value="naver">네이버</option>
+                        <option th:value="facebook">페이스북</option>
+                        <option th:value="kakao">카카오</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">검색</button>
+            </form>
+        </div>
+
         <table class="table table-striped">
             <thead>
             <tr>
                 <th>#</th>
                 <th>이름</th>
+                <th>이메일</th>
                 <th>도시</th>
                 <th>주소</th>
                 <th>우편번호</th>
@@ -18,6 +46,7 @@
             <tbody>
             <tr th:each="member : ${members}">
                 <td th:text="${member.id}"></td>
+                <td th:email="${member.email}"></td>
                 <td th:text="${member.getUsername}"></td>
                 <td th:text="${member.address?.city}"></td>
                 <td th:text="${member.address?.street}"></td>

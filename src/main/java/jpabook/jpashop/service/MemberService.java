@@ -3,6 +3,7 @@ package jpabook.jpashop.service;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.dto.MemberForm;
 import jpabook.jpashop.dto.MemberLogin;
+import jpabook.jpashop.dto.MemberSearch;
 import jpabook.jpashop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -45,8 +46,7 @@ public class MemberService {
     }
 
     // 4. 로그인
-    public String login(MemberLogin memberLogin) throws Exception{
-        System.out.println("MemberService - login 메쏘드 실행 ");
+    public void login(MemberLogin memberLogin) throws Exception{
         Member findMember = memberRepository.findByName(memberLogin.getUsername());
 
             if (findMember==null){
@@ -55,8 +55,13 @@ public class MemberService {
             if(!encoder.matches(memberLogin.getPassword(),findMember.getPassword())){
                 throw new BadCredentialsException("비밀번호가 틀렸습니다.");
             }
-            return findMember.getRole();
     }
+
+    // 검색
+    public List<Member> searchMembers(MemberSearch memberSearch){
+        return memberRepository.searchQuery(memberSearch);
+    }
+
 
     // 중복 회원 검증
     private void validateDuplicateMember(String name) {
@@ -65,4 +70,6 @@ public class MemberService {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
     }
+
+
 }

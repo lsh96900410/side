@@ -1,10 +1,7 @@
 package jpabook.jpashop.service;
 
-import jpabook.jpashop.domain.item.Book;
-import jpabook.jpashop.domain.item.Item;
-import jpabook.jpashop.dto.Response;
-import jpabook.jpashop.dto.item.BookForm;
-import jpabook.jpashop.dto.item.ItemForm;
+import jpabook.jpashop.domain.Item;
+import jpabook.jpashop.dto.ItemForm;
 import jpabook.jpashop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,22 +15,21 @@ import java.util.List;
 public class ItemService {
 
     private final ItemRepository itemRepository;
-
     @Transactional
-    public void saveItem(BookForm form){
-        Book book = new Book(form);
-        itemRepository.save(book);
+    public void saveItem(ItemForm form) {
+        Item item = new Item(form);
+        itemRepository.save(item);
     }
 
     @Transactional
-    public void updateItem(Long itemId, BookForm form){
-        Book findItem = (Book)itemRepository.findOne(itemId);
+    public void updateItem(Long itemId, ItemForm form){
+        Item findItem = itemRepository.findOne(itemId);
         findItem.update(form);
     }
 
-    public BookForm updateViewForm(Long itemId){
-        Book one =(Book)itemRepository.findOne(itemId);
-        BookForm form=new BookForm(one);
+    public ItemForm updateViewForm(Long itemId){
+        Item one =itemRepository.findOne(itemId);
+        ItemForm form=new ItemForm(one);
         return form;
     }
 
@@ -44,8 +40,5 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
-//    public Response findOne(Long itemId){
-//        return Response.builder().data(itemRepository.findOne(itemId)).build();
-//
-//    }
+
 }

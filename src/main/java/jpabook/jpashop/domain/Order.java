@@ -49,7 +49,6 @@ public class Order {
     public Order(Member member,Delivery delivery,OrderItem... orderItems){
         this.member=member;
         setDelivery(delivery);
-        this.delivery=delivery;
         this.status=OrderStatus.ORDER;
         this.orderDate=LocalDateTime.now();
         this.totalPrice=getTotalPrice();
