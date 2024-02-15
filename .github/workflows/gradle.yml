@@ -56,7 +56,7 @@ jobs:
         --application-name jpashop-code-apl
         --deployment-config-name CodeDeployDefault.OneAtATime
         --deployment-group-name jpaShop
-        --s3-location bucket= first-s3,bundleType=zip,key=jpashop-deploy.zip
+        --s3-location bucket=first-s3,bundleType=zip,key=jpashop-deploy.zip
 
 #  dependency-submission:
 #
