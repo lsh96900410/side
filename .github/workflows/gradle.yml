@@ -28,6 +28,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+# ./gradlew 실행 권한 부여
     - name: Run chmod to make gradlew executable
       run: chmod +x ./gradlew
 
@@ -37,6 +38,7 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
+# 파일 압축
     - name: Make zip
       run: zip -r ./jpashop-deploy.zip .
 
@@ -48,9 +50,11 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-northeast-2
 
+# 압축 파일 S3로 전송
     - name: Upload to S3 bucket
       run: aws s3 cp --region ap-northeast-2 ./jpashop-deploy.zip s3://first-s3/jpashop.zip
 
+# CodeDeploy 설정
     - name: AWS codeDeploy
       run: aws deploy create-deployment
         --application-name jpashop-code-apl
