@@ -64,4 +64,4 @@ jobs:
 
 # CodeDeploy 설정
     - name: AWS codeDeploy
-      run: aws deploy create-deployment --application-name first-code-deploy --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name first-deployment-group --file-exists-behavior OVERWRITE --s3-location bucket=first-s3,bundleType=zip,key=/jpashop.zip
+      run: aws deploy create-deployment --application-name first-code-deploy --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name first-deployment-group --file-exists-behavior OVERWRITE --s3-location bucket=first-s3,bundleType=zip,key=jpashop.zip
