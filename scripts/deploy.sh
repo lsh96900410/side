@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # 기본은 /home/ubuntu로 하시면 되고 Ec2내에 폴더를 만들었으면 폴더 이름을 repository name에 넣어주세요
-REPOSITORY=/home/ubuntu/{{ app/step2/zip }}
+REPOSITORY=/home/ubuntu/
 
 echo "> 현재 구동 중인 애플리케이션 pid 확인"
 

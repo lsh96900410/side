@@ -1,10 +1,3 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
-
 name: Java CI with Gradle
 
 on:
@@ -12,6 +5,9 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -51,7 +47,7 @@ jobs:
 
 # 파일 압축
     - name: Make zip
-      run: zip -r ./jpashop.zip
+      run: zip -r ./jpashop.zip ./deploy
       shell: bash
 
 # AWS  권한 확인
@@ -68,4 +64,4 @@ jobs:
 
 # CodeDeploy 설정
     - name: AWS codeDeploy
-      run: aws deploy create-deployment --application-name first-code-deploy --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name first-deployment-group --s3-location bucket=first-s3,bundleType=zip,key=jpashop.zip
+      run: aws deploy create-deployment --application-name first-code-deploy --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name first-deployment-group --file-exists-behavior OVERWRITE --s3-location bucket=first-s3,bundleType=zip,key=jpashop.zip
