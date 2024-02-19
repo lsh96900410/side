@@ -51,7 +51,7 @@ jobs:
 
 # 파일 압축
     - name: Make zip
-      run: zip -r ./jpashop.zip .deploy
+      run: zip -r ./jpashop.zip
       shell: bash
 
 # AWS  권한 확인
