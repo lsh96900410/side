@@ -17,8 +17,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
     - uses: actions/checkout@v4
@@ -38,9 +36,23 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
+    - name: Make Directory
+      run: mkdir -p deploy
+
+    - name: Copy Jar
+      run: cp ./build/libs/*.jar ./deploy
+
+    - name: Copy appspec.yaml
+      run: cp appsepc.yaml ./deploy
+
+    - name: Copy script
+      run: cp ./scripts/*.sh ./deploy
+
+
 # 파일 압축
     - name: Make zip
-      run: zip -r ./jpashop-deploy.zip .
+      run: zip -r ./jpashop-deploy.zip .deploy
+      shell: bash
 
 # AWS  권한 확인
     - name: Configure AWS Credentials
@@ -56,4 +68,4 @@ jobs:
 
 # CodeDeploy 설정
     - name: AWS codeDeploy
-      run: aws deploy create-deployment --application-name jpashop-code-apl --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name jpaShop --s3-location bucket=first-s3,bundleType=zip,key=first-s3/jpashop.zip
+      run: aws deploy create-deployment --application-name jpashop-code-apl --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name jpaShop --s3-location bucket=first-s3,bundleType=zip,key=jpashop.zip
