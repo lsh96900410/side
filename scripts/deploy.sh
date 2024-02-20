@@ -34,6 +34,8 @@ chmod +x $JAR_NAME # Jar 파일은 실행 권한이 없는 상태이므로 권�
 
 echo "> $JAR_NAME 실행"
 
+java -jar $JAR_NAME
+
 nohup java -jar \
     -Dspring.config.location=classpath:/application.properties,classpath:/application-real.properties,/home/ec2-user/app/application-oauth.properties,/home/ec2-user/app/application-real-db.properties \
     -Dspring.profiles.active=real \
