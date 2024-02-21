@@ -21,3 +21,13 @@
 # Project Architecture
 
 ![아키텍쳐](https://github.com/lsh96900410/practice/assets/133841235/d4446320-6912-4d56-8379-504bec146da9)
+
+# TODO
+
+CD 작업 중, EC2의 CodeDeploy-agent 가 정상적으로 S3 Bucket에 접근하여 파일을 가져오지만, 실행이 안되는 상황.
+CodeDeploy 로그 상에서도 빌드,배포 과정에서 오류난 부분이 없었다.
+deploy.sh 파일에서 8라인까지는 작업 완료된 것을 확인 후, 13 라인을 체크하기위해 EC2에 배포된 프로젝트를 실행하며 실행 포트를 확인 해보기로했다.
+![ERROR](https://github.com/lsh96900410/practice/assets/133841235/fd796ece-6061-460f-b61a-ef3b0e183e4f)
+
+
+실행 포트 번호를 확인 하니 .jar 가 아닌 .java 로 실행 중이였다.
