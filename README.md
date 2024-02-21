@@ -23,11 +23,20 @@
 ![아키텍쳐](https://github.com/lsh96900410/practice/assets/133841235/d4446320-6912-4d56-8379-504bec146da9)
 
 # TODO
+![ERROR](https://github.com/lsh96900410/practice/assets/133841235/fd796ece-6061-460f-b61a-ef3b0e183e4f)
 
 CD 작업 중, EC2의 CodeDeploy-agent 가 정상적으로 S3 Bucket에 접근하여 파일을 가져오지만, 실행이 안되는 상황.
 CodeDeploy 로그 상에서도 빌드,배포 과정에서 오류난 부분이 없었다.
 deploy.sh 파일에서 8라인까지는 작업 완료된 것을 확인 후, 13 라인을 체크하기위해 EC2에 배포된 프로젝트를 실행하며 실행 포트를 확인 해보기로했다.
-![ERROR](https://github.com/lsh96900410/practice/assets/133841235/fd796ece-6061-460f-b61a-ef3b0e183e4f)
 
+###
+![EC2 netstat](https://github.com/lsh96900410/practice/assets/133841235/3897c163-b998-4d24-b384-2dc62273e32f)
 
-실행 포트 번호를 확인 하니 .jar 가 아닌 .java 로 실행 중이였다.
+실행 포트 번호를 확인 하니 .jar 가 아닌 .java 로 실행 중이였다...
+그렇기에 13라인에서의 .jar 파일로 진행되는 부분이 정상 실행이 안되고 있었다.
+
+###
+![해결](https://github.com/lsh96900410/practice/assets/133841235/f454e043-03cf-40dd-b8b1-47b120b9ce5e)
+
+.jar -> .java로 바꾸니 해결이 되긴 하였지만, 왜 .jar 파일이 아닌 .java로 실행되어지는지는 더 알아봐야겠다.
+
