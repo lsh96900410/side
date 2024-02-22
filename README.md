@@ -18,9 +18,9 @@
 
 
 
-# Project Architecture
+# Architecture
 
-![아키텍쳐](https://github.com/lsh96900410/practice/assets/133841235/d4446320-6912-4d56-8379-504bec146da9)
+![아키텍처 ](https://github.com/lsh96900410/studyProject/assets/133841235/e7b8e06c-bc34-40a5-9011-e9897179da8c)
 
 # TODO
 ![ERROR](https://github.com/lsh96900410/practice/assets/133841235/fd796ece-6061-460f-b61a-ef3b0e183e4f)
