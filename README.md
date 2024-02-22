@@ -22,6 +22,18 @@
 
 ![아키텍처 ](https://github.com/lsh96900410/studyProject/assets/133841235/e7b8e06c-bc34-40a5-9011-e9897179da8c)
 
+# 도메인 모델 
+
+![jpashop 도메인 모델](https://github.com/lsh96900410/studyProject/assets/133841235/89160ab3-5283-4c4f-be33-3469fa45fb96)
+
+# 엔티티 설계 
+
+![jpashop 엔티티 설계](https://github.com/lsh96900410/studyProject/assets/133841235/5d0d7d4a-e5d4-4086-80b4-4db29c9f9587)
+
+# 시퀀스 다이어그램 
+
+![jpashop 시퀀스 다이어그램](https://github.com/lsh96900410/studyProject/assets/133841235/12d8f41f-e373-44ac-8899-839516b215a5)
+
 # TODO
 ![ERROR](https://github.com/lsh96900410/practice/assets/133841235/fd796ece-6061-460f-b61a-ef3b0e183e4f)
 
