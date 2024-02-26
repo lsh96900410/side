@@ -18,23 +18,31 @@
 
 
 
-# Architecture
+# 🖼️ Architecture
 
 ![아키텍처 ](https://github.com/lsh96900410/studyProject/assets/133841235/e7b8e06c-bc34-40a5-9011-e9897179da8c)
 
-# 도메인 모델 
+###
+
+![순서도](https://github.com/lsh96900410/studyProject/assets/133841235/b83030cc-d9fd-495a-b972-c2eae8a457ac)
+
+# 🔎 도메인 모델 및 엔티티 설계
 
 ![jpashop 도메인 모델](https://github.com/lsh96900410/studyProject/assets/133841235/89160ab3-5283-4c4f-be33-3469fa45fb96)
 
-# 엔티티 설계 
+###
 
 ![jpashop 엔티티 설계](https://github.com/lsh96900410/studyProject/assets/133841235/5d0d7d4a-e5d4-4086-80b4-4db29c9f9587)
 
-# 시퀀스 다이어그램 
+# 🔎 시퀀스 다이어그램 
 
 ![jpashop 시퀀스 다이어그램](https://github.com/lsh96900410/studyProject/assets/133841235/12d8f41f-e373-44ac-8899-839516b215a5)
 
-# TODO
+![쿼리 dsl](https://github.com/lsh96900410/Danaga/assets/133841235/8a38b2af-179a-4d1a-8a43-5c0b2e92be18)
+
+
+# 🔎 Check
+
 ![ERROR](https://github.com/lsh96900410/practice/assets/133841235/fd796ece-6061-460f-b61a-ef3b0e183e4f)
 
 CD 작업 중, EC2의 CodeDeploy-agent 가 정상적으로 S3 Bucket에 접근하여 파일을 가져오지만, 실행이 안되는 상황.
@@ -51,4 +59,10 @@ deploy.sh 파일에서 8라인까지는 작업 완료된 것을 확인 후, 13 �
 ![해결](https://github.com/lsh96900410/practice/assets/133841235/f454e043-03cf-40dd-b8b1-47b120b9ce5e)
 
 .jar -> .java로 바꾸니 해결이 되긴 하였지만, 왜 .jar 파일이 아닌 .java로 실행되어지는지는 더 알아봐야겠다.
+
+# 👨🏻‍🎓 Todo
+
+### 1. csrf ,cors 공부 후 적용 + JWT 적용 해보기
+### 2. Item 상속 구조 + Category 적용
+### 3. 새로운 기술 학습 할 때 마다 적용해보기
 
