@@ -39,6 +39,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/members","/orders/{orderId}/cancel","/orders").hasAnyRole("ADMIN","MANAGER")
                 .anyRequest().permitAll());
+
         // 로그인 설정
         http.formLogin(customizer -> customizer
                 .loginPage("/members/login").loginProcessingUrl("/members/login")
