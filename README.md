@@ -1,7 +1,3 @@
-# 프로젝트 소개
-### 학원에서 배웠던 기술들과 inflearn 김영한님의 강의를 복습하며 
-### 공부하고 싶었던 querydsl , Spring Security ,AWS , CI/CD 기술들을 학습하며 만든 프로젝트 입니다.
-
 # 개발 환경
 
 <img alt="Html" src ="https://img.shields.io/badge/springboot-6DB33F.svg?&style=for-the-badge&logo=springboot&logoColor=white"/> <img alt="Html" src ="https://img.shields.io/badge/springsecurity-6DB33F.svg?&style=for-the-badge&logo=springsecurity&logoColor=white"/>
