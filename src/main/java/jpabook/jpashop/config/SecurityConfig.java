@@ -44,7 +44,6 @@ public class SecurityConfig {
         http.formLogin(customizer -> customizer
                 .loginPage("/members/login").loginProcessingUrl("/members/login")
                         .defaultSuccessUrl("/").failureForwardUrl("/members/login"));
-//                .httpBasic(httpBasicConfigurer->httpBasicConfigurer.disable()); //bearer
         // 소셜 로그인 설정
         http.oauth2Login(oauth2Customizer ->
                 oauth2Customizer.loginPage("/members/login")
