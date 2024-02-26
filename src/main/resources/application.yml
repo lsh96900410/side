@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${{ secret.RDS_URL }}
-    username: ${{ secret.RDS_USERNAME }}
-    password: ${{ secret.RDS_PASSWORD }}
+    url: ${{ secrets.RDS_URL }}
+    username: ${{ secrets.RDS_USERNAME }}
+    password: ${{ secrets.RDS_PASSWORD }}
 
   jpa:
     hibernate:
@@ -16,16 +16,16 @@ spring:
       client:
         registration:
           google:
-            client-id: ${{ secret.GOOGLE_ID }}
-            client-secret: ${{ secret.GOOGLE_SECRET }}
+            client-id: ${{ secrets.GOOGLE_ID }}
+            client-secret: ${{ secrets.GOOGLE_SECRET }}
             redirect-uri: https://ec2-13-125-253-61.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/google
             scope:
               - email
               - profile
 
           naver:
-            client-id: ${{ secret.NAVER_ID }}
-            client-secret: ${{ secret.NAVER_SECRET }}
+            client-id: ${{ secrets.NAVER_ID }}
+            client-secret: ${{ secrets.NAVER_SECRET }}
             scope:
               - name
               - email
