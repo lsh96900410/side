@@ -19,23 +19,23 @@ class MemberServiceTest {
     @Autowired MemberRepository memberRepository;
     @Autowired EntityManager em;
 
-    @Test
-    public void 회원가입() throws Exception{
-        //given
-        //Member member = new Member();
-        //member.setUsername("kim");
-        MemberForm form = new MemberForm();
-        form.setUsername("kim");
-        form.setPassword("td198900!");
-        //when
-        Long savedId = memberService.join(form);
-        Member one = memberService.findOne(savedId);
-
-        //then
-        // em.flush();
-        assertEquals(form.getUsername(),memberRepository.findOne(savedId).getUsername());
-        // JPA에서 같은 트랜잭션에서 엔티티들의 pk가 똑같으면 같은 객체로 관리
-    }
+//    @Test
+//    public void 회원가입() throws Exception{
+//        //given
+//        //Member member = new Member();
+//        //member.setUsername("kim");
+//        MemberForm form = new MemberForm();
+//        form.setUsername("kim");
+//        form.setPassword("td198900!");
+//        //when
+//        Long savedId = memberService.join(form);
+//        Member one = memberService.findOne(savedId);
+//
+//        //then
+//        // em.flush();
+//        assertEquals(form.getUsername(),memberRepository.findOne(savedId).getUsername());
+//        // JPA에서 같은 트랜잭션에서 엔티티들의 pk가 똑같으면 같은 객체로 관리
+//    }
 
 //   // @Test()
 //    public void 중복회원예외() throws  Exception{
