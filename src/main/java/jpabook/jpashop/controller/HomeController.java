@@ -16,7 +16,7 @@ public class HomeController {
     private final MemberService memberService;
 
     @RequestMapping("/")
-    public String home(HttpSession session){
+    public String home(){
         return "home";
     }
 }
