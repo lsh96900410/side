@@ -31,10 +31,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(CsrfConfigurer::disable);
-
-
-
-
         //접근 권한 설정
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/members","/orders/{orderId}/cancel","/orders").hasAnyRole("ADMIN","MANAGER")
