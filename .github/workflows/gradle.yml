@@ -14,10 +14,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    env :
-      working-directory: ./
-      APPLICATION: ${{ secrets.APPLICATIONS}}
-
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
@@ -25,6 +21,12 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+
+    - name: application.yml
+      run: |
+           cd ./src/main/resources
+           touch ./application.yml
+           echo "${{ secrets.APPLICATIONS}}" > ./application.yml
 
 
     - name: Run chmod to make gradlew executable
