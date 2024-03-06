@@ -13,6 +13,13 @@
  <img src="https://img.shields.io/badge/amazonrds-527FFF?style=for-the-badge&logo=amazonrds&logoColor=white"> <img src="https://img.shields.io/badge/amazonec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white"> 
 
 
+# Version 1 
+
+
+
+
+# Version 2 
+
 
 # 🖼️ Architecture
 
