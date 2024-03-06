@@ -12,39 +12,66 @@
  <img src="https://img.shields.io/badge/aws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> <img src="https://img.shields.io/badge/amazons3-569A31?style=for-the-badge&logo=amazons3&logoColor=white"> <img src="https://img.shields.io/badge/codedeploy-amazons3?style=for-the-badge&logo=amazonec2&logoColor=white">
  <img src="https://img.shields.io/badge/amazonrds-527FFF?style=for-the-badge&logo=amazonrds&logoColor=white"> <img src="https://img.shields.io/badge/amazonec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white"> 
 
+<div>
+<h1> 🚴🏻‍♂️ Version 1 </h1>
+<h4> 김영한님의 실전! 스프링 부트와 JPA 활용 1 강의와 자바 ORM 표준 JPA 프로그래밍 책을 학습한 버전 </h4>
 
-# Version 1 
+ # 🖼️ Architecture 
+<br/>
+<img src="https://github.com/lsh96900410/aaa/assets/133841235/20540658-d311-410a-b4e0-f6ab5ef7cc8e" width="1000" height="500" />
 
+<details> <summary> <h2> 🔎 애플리케이션 아키텍처 / 도메인 / 엔티티 / 테이블 </h2></summary>  
 
+ <img src="https://github.com/lsh96900410/aaa/assets/133841235/1f2a7da5-4929-4cda-9aa2-ce2ff883c15a" width="600" height="300" /> <br>
+ <img src="https://github.com/lsh96900410/studyProject/assets/133841235/89160ab3-5283-4c4f-be33-3469fa45fb96" width="600" height="300" />
+ <img src="https://github.com/lsh96900410/aaa/assets/133841235/526fcbb1-5bda-4534-85b6-de707954f195" width="490" height="500"/> <img src="https://github.com/lsh96900410/aaa/assets/133841235/d738d4d7-d04f-4c94-84e1-724c70210cb5" width="490" height="500" /> 
 
+ <h3> RDBMS에는 없는 객체 지향의 상속 구조를 ORM을 통해 해결하는 방식 학습 </h3>
+</details>
 
-# Version 2 
+<h3> 🔎 JPQL 과 JPA Criteria를 활용한 동적 쿼리 기능 </h3>
 
+<img src="https://github.com/lsh96900410/aaa/assets/133841235/36e1ad2b-e3b1-420f-9f19-47e804072a34" width="480" height="500" /> 
+<img src="https://github.com/lsh96900410/aaa/assets/133841235/284737bd-8525-4cfd-b8b1-5fe28fb0aa2c" width="520" height="500" /> <br/>
 
-# 🖼️ Architecture
+<h4> JPQL : 쿼리를 문자열을 조건에 따라 생성 -> 코드 작성 과정에서 오류 발생 가능성 높음 </h4>
+<h4> Criteria : Spring 표준 기술이지만, 쿼리 형식 예측이 힘들기에 지양</h4>
+ <h2> 👨🏻‍🎓 TODO </h2>
+ <h4> 1. Querydsl 학습 후 구현해보기 </h4><h4> 2. Spring Security 복습하며 적용해보기 </h4><h4> 3. CI/CD 학습하며 구현해보기 </h4><h4> 4. UML 다이어그램 종류 및 의미 등 학습해보기 </h4><br/>
+</div>
 
-![아키텍처 ](https://github.com/lsh96900410/studyProject/assets/133841235/e7b8e06c-bc34-40a5-9011-e9897179da8c)
+<h1> 🚴🏻‍♂️ Version 2 </h1>
+<h4> 이전 프로젝트와 Spring 강의를 복습하며, 새롭게 학습한 기술들 적용 버전 <br/> Docker 컨테이너와 Jenkins 를 통한 CI/CD 환경을 구축하는 과정에서 10일 간 블루스크린 이슈 발생.. 이후에 학습해보기로 <br/> AWS Cloud 서비스 -EC2 ,IAM , S3, CodeDeploy 를 이용하여 CI/CD 환경을 구축 </h4>
 
-###
+# 🖼️ Architecture 
 
-![순서도](https://github.com/lsh96900410/studyProject/assets/133841235/b83030cc-d9fd-495a-b972-c2eae8a457ac)
+![KakaoTalk_20240306_203153399](https://github.com/lsh96900410/aaa/assets/133841235/aaa6f381-774f-42e4-881d-f62c9d05e778)
 
-# 🔎 도메인 모델 및 엔티티 설계
+<h1> 🖼️ CI / CD 과정</h3> 
 
-![jpashop 도메인 모델](https://github.com/lsh96900410/studyProject/assets/133841235/89160ab3-5283-4c4f-be33-3469fa45fb96)
+![KakaoTalk_20240306_181509321](https://github.com/lsh96900410/aaa/assets/133841235/d1c70e76-eb64-4e68-93a4-51a63170ddf9)
 
-###
+# 🔎 엔티티 : SpringSecurity를 위한 Member 변경 + CategoryItem 추가 
 
 ![jpashop 엔티티 설계](https://github.com/lsh96900410/studyProject/assets/133841235/5d0d7d4a-e5d4-4086-80b4-4db29c9f9587)
 
-# 🔎 시퀀스 다이어그램 
-
+<details >  <summary> <h2>🔎  시퀀스 다이어그램 </h2></summary> 
+<h3> 로그인 </h3>
+ 
 ![jpashop 시퀀스 다이어그램](https://github.com/lsh96900410/studyProject/assets/133841235/12d8f41f-e373-44ac-8899-839516b215a5)
+<h3> Querydsl </h3>
 
 ![쿼리 dsl](https://github.com/lsh96900410/Danaga/assets/133841235/8a38b2af-179a-4d1a-8a43-5c0b2e92be18)
 
+</details>
 
-# 🔎 Check
+# 🔨 Error 
+
+<h3> 1. Querydsl QClass 제대로 생성 및 작동 X <br/> : 의존성 코드 순서 체크 해보기 -> clean / build 실행하며 QClass들 체크 -> QClass 들 관련한 스크립트 코드 확인 </h3>
+
+<details>
+ <summary> <h3> 2. CD 작업 중, 자동 실행 X </h3> </summary>
+: 배포 스크립트 확인 -> S3 확인 -> CodeDeploy Log 확인 -> 배포 스크립트 재확인 + EC2 서버 연관 부분들 체크
 
 ![ERROR](https://github.com/lsh96900410/practice/assets/133841235/fd796ece-6061-460f-b61a-ef3b0e183e4f)
 
@@ -62,10 +89,12 @@ deploy.sh 파일에서 8라인까지는 작업 완료된 것을 확인 후, 13 �
 ![해결](https://github.com/lsh96900410/practice/assets/133841235/f454e043-03cf-40dd-b8b1-47b120b9ce5e)
 
 .jar -> .java로 바꾸니 해결이 되긴 하였지만, 왜 .jar 파일이 아닌 .java로 실행되어지는지는 더 알아봐야겠다.
+</details>
 
-# 👨🏻‍🎓 Todo
-
-### 1. csrf ,cors 공부 후 적용 + JWT 적용 해보기
-### 2. Item 상속 구조 + Category 적용
-### 3. 새로운 기술 학습 할 때 마다 적용해보기
+<h2> 👨🏻‍🎓 Todo </h2>
+<h3> 1. 교육 과정 학습 내용 복습 -> RESTful API , 동기/비동기 설정 + 기능들 좀 추가 </h3>
+<h3> 2. csrf,cors 공부 후 적용해보기 + JWT 적용해보기 </h3>
+<h3> 3. CS 50 과정 준비 </h3>
+<h3> 4. noSql,ElaticSearch , MSA 아키텍처 훑어보면서 준비 </h3>
+<h3> 5. 트랜잭션 계좌 프로젝트 연습 후 여따 적용해보기 </h3>
 
