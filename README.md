@@ -41,7 +41,7 @@
 </div>
 
 <h1> 🚴🏻‍♂️ Version 2 </h1>
-<h4> 이전 프로젝트와 Spring 강의를 복습하며, 새롭게 학습한 기술들 적용 버전 <br/> Docker 컨테이너와 Jenkins 를 통한 CI/CD 환경을 구축하는 과정에서 10일 간 블루스크린 이슈 발생.. 이후에 학습해보기로 <br/> AWS Cloud 서비스 -EC2 ,IAM , S3, CodeDeploy 를 이용하여 CI/CD 환경을 구축 </h4>
+<h4> 이전 프로젝트와 Spring 강의를 복습하며, 새롭게 학습한 기술들 적용 버전 <br/> Docker 컨테이너와 Jenkins 를 통한 CI/CD 환경을 구축하는 과정에서 10일 간 블루스크린 이슈 .. 이후에 해보기로 <br/> -> AWS Cloud 서비스 -EC2 ,IAM , S3, CodeDeploy 를 이용하여 CI/CD 환경을 구축 </h4>
 
 # 🖼️ Architecture 
 
