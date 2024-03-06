@@ -1,6 +1,7 @@
 package jpabook.jpashop.service;
 
 import jpabook.jpashop.domain.*;
+import jpabook.jpashop.exception.NotEnoughStockException;
 import jpabook.jpashop.repository.ItemRepository;
 import jpabook.jpashop.repository.MemberRepository;
 import jpabook.jpashop.repository.OrderRepository;
@@ -27,6 +28,9 @@ public class OrderService {
         // 1. 엔티티 조회
         Member member = memberRepository.findOne(memberId);
         Item item = itemRepository.findOne(itemId);
+        if(item.getStockQuantity()<count){
+            throw new NotEnoughStockException("수량이 없습니다.");
+        }
         // 2. 배송정보 생성
         Delivery delivery= new Delivery(member.getAddress());
         // 3. 주문상품 생성

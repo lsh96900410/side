@@ -35,7 +35,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>#</th>
+                <th>그룹</th>
                 <th>이름</th>
                 <th>이메일</th>
                 <th>도시</th>
@@ -45,9 +45,9 @@
             </thead>
             <tbody>
             <tr th:each="member : ${members}">
-                <td th:text="${member.id}"></td>
+                <td th:text="${member.provider}"></td>
+                <td th:text="${member.username}"></td>
                 <td th:email="${member.email}"></td>
-                <td th:text="${member.getUsername}"></td>
                 <td th:text="${member.address?.city}"></td>
                 <td th:text="${member.address?.street}"></td>
                 <td th:text="${member.address?.zipcode}"></td>

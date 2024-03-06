@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/header :: header">
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+    <div class="jumbotron">
+        <h1>이승현 StudyProject</h1>
+        <div>
+            <img src="/403%20에러.PNG"/>
+            <div>
+                <h3> 이 기능은 등급 제한입니다 </h3>
+                <p> <a href="/"> 홈으로 돌아가기 </a></p>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer" />
+
+</div> <!-- /container -->
+
+</body>
+</html>

@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
@@ -26,6 +27,7 @@ import org.springframework.web.filter.CorsFilter;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final AuthenticationFailureHandler customFailureHandler;
     private final PrincipalOauth2UserService principalOauth2UserService;
 
     @Bean
@@ -33,18 +35,25 @@ public class SecurityConfig {
         http.csrf(CsrfConfigurer::disable);
         //접근 권한 설정
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/members","/orders/{orderId}/cancel","/orders").hasAnyRole("ADMIN","MANAGER")
+                .requestMatchers("/orders/{orderId}/cancel","/orders").hasAnyRole("ADMIN","MANAGER")
                 .anyRequest().permitAll());
-
+        
         // 로그인 설정
         http.formLogin(customizer -> customizer
                 .loginPage("/members/login").loginProcessingUrl("/members/login")
-                        .defaultSuccessUrl("/").failureForwardUrl("/members/login"));
+                .failureHandler(customFailureHandler).defaultSuccessUrl("/"));
+
         // 소셜 로그인 설정
         http.oauth2Login(oauth2Customizer ->
                 oauth2Customizer.loginPage("/members/login")
                         .userInfoEndpoint(userInfoEndpointCustomize->
                                 userInfoEndpointCustomize.userService(principalOauth2UserService)));
+        
+        // 권한 예외 설정
+        http.exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
+                httpSecurityExceptionHandlingConfigurer.accessDeniedHandler((request, response, accessDeniedException) -> {
+                    response.sendRedirect("/403.html");
+                }));
         return http.build();
     }
 

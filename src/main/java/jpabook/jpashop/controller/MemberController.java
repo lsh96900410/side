@@ -2,18 +2,13 @@ package jpabook.jpashop.controller;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import jpabook.jpashop.config.auth.PrincipalDetails;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.dto.MemberForm;
 import jpabook.jpashop.dto.MemberLogin;
 import jpabook.jpashop.dto.MemberSearch;
 import jpabook.jpashop.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,26 +30,14 @@ public class MemberController {
     }
 
     @GetMapping("/members/login")
-    public String loginForm(Model model){
+    public String loginForm(@RequestParam(value = "error",required = false)String error,
+                            @RequestParam(value = "exception",required = false)String exception,Model model){
         model.addAttribute("loginForm",new MemberLogin());
+        model.addAttribute("error",error);
+        model.addAttribute("exception",exception);
         return "members/login";
     }
 
-    @PostMapping("/members/login")
-    public String login(@ModelAttribute MemberLogin memberLogin, HttpSession session,Model model){
-        try {
-            memberService.login(memberLogin);
-            return "redirect:/";
-        } catch (UsernameNotFoundException e) {
-            model.addAttribute("loginForm",memberLogin);
-            return "/members/login";
-        }catch (BadCredentialsException e){
-            model.addAttribute("loginForm",memberLogin);
-            return "/members/login";
-        }catch (Exception e ){
-            return "redirect:/";
-        }
-    }
     @GetMapping("/members/logout")
     public String logout(HttpSession session){
         session.invalidate();
@@ -70,10 +53,10 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    //@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @GetMapping("/members")
-    public String list(@AuthenticationPrincipal PrincipalDetails psd,
-                       @ModelAttribute("memberSearch") MemberSearch memberSearch, Model model){
+    public String list(@ModelAttribute("memberSearch") MemberSearch memberSearch, Model model) throws AccessDeniedException {
+        System.out.println("멤버 컨트롤러 !");
         model.addAttribute("members",memberService.searchMembers(memberSearch));
         return "members/memberList";
     }

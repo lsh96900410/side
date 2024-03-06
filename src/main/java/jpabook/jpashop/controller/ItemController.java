@@ -1,10 +1,12 @@
 package jpabook.jpashop.controller;
 
+import jakarta.validation.Valid;
 import jpabook.jpashop.dto.ItemForm;
 import jpabook.jpashop.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,13 +20,14 @@ public class ItemController {
 
     @GetMapping("/items/new")
     public String createForm(Model model){
-        model.addAttribute("form",new ItemForm());
+        model.addAttribute("itemForm",new ItemForm());
         return "items/createItemForm";
     }
 
     @PostMapping("/items/new")
-    public String create(ItemForm itemForm){
-            itemService.saveItem(itemForm);
+    public String create(@Valid ItemForm form, BindingResult result){
+            if (result.hasErrors())return "items/createItemForm";
+            itemService.saveItem(form);
         return "redirect:/";
     }
 

@@ -1,7 +1,10 @@
 package jpabook.jpashop.repository;
 
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.EntityManager;
 import jpabook.jpashop.domain.Item;
+import jpabook.jpashop.domain.QItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +30,9 @@ public class ItemRepository{
     }
 
     public List<Item> findAll(){
+        JPAQuery<Item> query = new JPAQuery<>(em);
+        QItem item = QItem.item;
+        BooleanBuilder builder = new BooleanBuilder();
         return em.createQuery("select i from Item i",Item.class).getResultList();
     }
 }

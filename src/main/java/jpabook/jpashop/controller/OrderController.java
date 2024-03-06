@@ -4,6 +4,7 @@ import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.Item;
 import jpabook.jpashop.dto.OrderSearch;
+import jpabook.jpashop.exception.NotEnoughStockException;
 import jpabook.jpashop.service.ItemService;
 import jpabook.jpashop.service.MemberService;
 import jpabook.jpashop.service.OrderService;
@@ -23,7 +24,7 @@ public class OrderController {
     private final ItemService itemService;
 
     @GetMapping("/order")
-    public String createForm(Model model){
+    public String createForm(Model model) {
         List<Member> members = memberService.findMembers();
         List<Item> items = itemService.findItems();
         model.addAttribute("members",members);
@@ -34,7 +35,7 @@ public class OrderController {
     @PostMapping("/order")
     public String createOrder(@RequestParam("memberId") Long memberId,
                               @RequestParam("itemId") Long itemId,
-                              @RequestParam("count") int count){
+                              @RequestParam("count") int count) throws NotEnoughStockException {
         orderService.order(memberId,itemId,count);
         return "redirect:/orders";
     }
@@ -52,4 +53,12 @@ public class OrderController {
         return "redirect:/orders";
     }
 
+    @ExceptionHandler(value = NotEnoughStockException.class)
+    protected String exception(Exception e ,Model model){
+        String message;
+        if(e instanceof NotEnoughStockException){
+            model.addAttribute("message","재고가 부족해요");
+        }
+        return "exception";
+    }
 }
