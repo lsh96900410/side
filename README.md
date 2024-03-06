@@ -51,7 +51,7 @@
 
 ![KakaoTalk_20240306_181509321](https://github.com/lsh96900410/aaa/assets/133841235/d1c70e76-eb64-4e68-93a4-51a63170ddf9)
 
-# 🔎 엔티티 : SpringSecurity를 위한 Member 변경 + CategoryItem 추가 
+# 🔎 엔티티 : Security Member 필드 추가 + CategoryItem 추가 
 
 ![jpashop 엔티티 설계](https://github.com/lsh96900410/studyProject/assets/133841235/5d0d7d4a-e5d4-4086-80b4-4db29c9f9587)
 
