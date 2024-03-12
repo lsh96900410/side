@@ -57,6 +57,7 @@ public class MemberController {
     @GetMapping("/members")
     public String list(@ModelAttribute("memberSearch") MemberSearch memberSearch, Model model) throws AccessDeniedException {
         System.out.println("멤버 컨트롤러 !");
+        System.out.println(memberService.searchMembers(memberSearch).get(0).getUsername());
         model.addAttribute("members",memberService.searchMembers(memberSearch));
         return "members/memberList";
     }
@@ -71,3 +72,4 @@ public class MemberController {
         return "members/member";
     }
 }
+//  Enable annotation processing

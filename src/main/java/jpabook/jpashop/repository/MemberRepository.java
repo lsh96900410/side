@@ -54,10 +54,20 @@ public class MemberRepository {
         if(StringUtils.hasText(memberSearch.getRole())){
             builder.and(qMember.role.eq(memberSearch.getRole()));
         }
-        // 3. 멤버 이름으로 검색 [ 포함 ]
-        if(StringUtils.hasText(memberSearch.getUsername())){
-            builder.and(qMember.username.contains(memberSearch.getUsername()));
+        // 3. 멤버 이름 및 주소로 검색 [ 포함 ]
+//        if(StringUtils.hasText(memberSearch.getUsername())){
+//            builder.and(qMember.username.contains(memberSearch.getUsername()));
+//        }
+        if(StringUtils.hasText(memberSearch.getSearchType())){
+            if(memberSearch.getSearchType().equals("주소")){
+                builder.or(qMember.address.city.contains(memberSearch.getSearchText()))
+                        .or(qMember.address.street.contains(memberSearch.getSearchText()))
+                        .or(qMember.address.zipcode.contains(memberSearch.getSearchText()));
+            }else{
+                builder.and(qMember.username.contains(memberSearch.getSearchText()));
+            }
         }
+
         return query.from(qMember).where(builder).fetch();
     }
 
