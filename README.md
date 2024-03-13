@@ -18,21 +18,21 @@
 
  # 🖼️ Architecture 
 <br/>
-<img src="https://github.com/lsh96900410/aaa/assets/133841235/20540658-d311-410a-b4e0-f6ab5ef7cc8e" width="1000" height="500" />
+<img src="https://github.com/lsh96900410/SpringSecurity-JWT/assets/133841235/6843071b-e4ec-407c-b879-3b0351989ce5" width="1000" height="500" />
 
 <details> <summary> <h2> 🔎 애플리케이션 아키텍처 / 도메인 / 엔티티 / 테이블 </h2></summary>  
 
- <img src="https://github.com/lsh96900410/aaa/assets/133841235/1f2a7da5-4929-4cda-9aa2-ce2ff883c15a" width="600" height="300" /> <br>
+ <img src="https://github.com/lsh96900410/SpringSecurity-JWT/assets/133841235/10aedd71-afb4-424f-a6ca-aecfec0ce152" width="600" height="300" /> <br>
  <img src="https://github.com/lsh96900410/studyProject/assets/133841235/89160ab3-5283-4c4f-be33-3469fa45fb96" width="600" height="300" />
- <img src="https://github.com/lsh96900410/aaa/assets/133841235/526fcbb1-5bda-4534-85b6-de707954f195" width="490" height="500"/> <img src="https://github.com/lsh96900410/aaa/assets/133841235/d738d4d7-d04f-4c94-84e1-724c70210cb5" width="490" height="500" /> 
+ <img src="https://github.com/lsh96900410/SpringSecurity-JWT/assets/133841235/3703b5a5-942d-43a8-95b4-65422bf07169" width="490" height="500"/> <img src="https://github.com/lsh96900410/SpringSecurity-JWT/assets/133841235/fa9e4aeb-4faa-4671-a51d-578c4f139416" width="490" height="500" /> 
 
  <h3> RDBMS에는 없는 객체 지향의 상속 구조를 ORM을 통해 해결하는 방식 학습 </h3>
 </details>
 
 <h3> 🔎 JPQL 과 JPA Criteria를 활용한 동적 쿼리 기능 </h3>
 
-<img src="https://github.com/lsh96900410/aaa/assets/133841235/36e1ad2b-e3b1-420f-9f19-47e804072a34" width="480" height="500" /> 
-<img src="https://github.com/lsh96900410/aaa/assets/133841235/284737bd-8525-4cfd-b8b1-5fe28fb0aa2c" width="520" height="500" /> <br/>
+<img src="https://github.com/lsh96900410/SpringSecurity-JWT/assets/133841235/8a1f3671-6409-4551-90ec-b6a673ae01e5" width="480" height="500" /> 
+<img src="https://github.com/lsh96900410/SpringSecurity-JWT/assets/133841235/b7020134-9920-4cba-92b9-37cf0179276c" width="520" height="500" /> <br/>
 
 <h4> JPQL : 쿼리를 문자열을 조건에 따라 생성 -> 코드 작성 과정에서 오류 발생 가능성 높음 </h4>
 <h4> Criteria : Spring 표준 기술이지만, 쿼리 형식 예측이 힘들기에 지양</h4>
@@ -45,11 +45,11 @@
 
 # 🖼️ Architecture 
 
-![KakaoTalk_20240306_203153399](https://github.com/lsh96900410/aaa/assets/133841235/aaa6f381-774f-42e4-881d-f62c9d05e778)
+![KakaoTalk_20240306_203153399](https://github.com/lsh96900410/SpringSecurity-JWT/assets/133841235/1ff84704-cd84-4e1c-8981-51c8e264c316)
 
 <h1> 🖼️ CI / CD 과정</h3> 
 
-![KakaoTalk_20240306_181509321](https://github.com/lsh96900410/aaa/assets/133841235/d1c70e76-eb64-4e68-93a4-51a63170ddf9)
+![KakaoTalk_20240306_181509321](https://github.com/lsh96900410/SpringSecurity-JWT/assets/133841235/253a5afe-f48d-4d38-9434-148e63641847)
 
 # 🔎 엔티티 : Security Member 필드 추가 + CategoryItem 추가 
 
