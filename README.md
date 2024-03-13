@@ -1,3 +1,10 @@
+# 프로젝트 간단 소개
+**교육 과정 수료 후, 프로젝트에 있어 기능 구현 이외에도 중요한 것들이 많다고 느꼈습니다.** 
+
+ **또한,** **새로운 기술을 학습하는 과정에서 작더라도 직접 적용해 보는 것이 중요하다고 생각했고, 그 과정에서 얻는 점이 많기에 저만의 성장 과정이 기록될 수 있는 개인 프로젝트가 있으면 좋겠다는 생각과 목표로 만들게 되었습니다.**
+
+**현재는 서버 구축과 백엔드 기술을 중점적으로 학습하고 적용해보고 있으며 목표에 알맞게 수료 후 새로 학습한 기술들을 하나씩 적용하며 프로젝트의 버전을 높이는 과정에서 역량 강화에 큰 도움이 되었고 앞으로도 프로젝트를 키워가며 그에 따른 프론트 기술과 설계 및 시각화 연습도 꾸준히 하는 것이 프로젝트의 목표입니다.**
+
 # 개발 환경
 
 <img alt="Html" src ="https://img.shields.io/badge/springboot-6DB33F.svg?&style=for-the-badge&logo=springboot&logoColor=white"/> <img alt="Html" src ="https://img.shields.io/badge/springsecurity-6DB33F.svg?&style=for-the-badge&logo=springsecurity&logoColor=white"/>
