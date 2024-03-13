@@ -20,14 +20,14 @@
 <br/>
 <img src="https://github.com/lsh96900410/SpringSecurity-JWT/assets/133841235/6843071b-e4ec-407c-b879-3b0351989ce5" width="1000" height="500" />
 
-<details> <summary> <h2> 🔎 애플리케이션 아키텍처 / 도메인 / 엔티티 / 테이블 </h2></summary>  
+ <h1> 🔎 애플리케이션 아키텍처 / 도메인 / 엔티티 / 테이블 </h1>  
 
  <img src="https://github.com/lsh96900410/SpringSecurity-JWT/assets/133841235/10aedd71-afb4-424f-a6ca-aecfec0ce152" width="600" height="300" /> <br>
  <img src="https://github.com/lsh96900410/studyProject/assets/133841235/89160ab3-5283-4c4f-be33-3469fa45fb96" width="600" height="300" />
  <img src="https://github.com/lsh96900410/SpringSecurity-JWT/assets/133841235/3703b5a5-942d-43a8-95b4-65422bf07169" width="490" height="500"/> <img src="https://github.com/lsh96900410/SpringSecurity-JWT/assets/133841235/fa9e4aeb-4faa-4671-a51d-578c4f139416" width="490" height="500" /> 
 
- <h3> RDBMS에는 없는 객체 지향의 상속 구조를 ORM을 통해 해결하는 방식 학습 </h3>
-</details>
+ <h3> RDBMS에는 없는 객체 지향의 상속 구조를 ORM을 통해 해결하는 방식 학습 </h3><br/>
+
 
 <h3> 🔎 JPQL 과 JPA Criteria를 활용한 동적 쿼리 기능 </h3>
 
@@ -55,7 +55,7 @@
 
 ![jpashop 엔티티 설계](https://github.com/lsh96900410/studyProject/assets/133841235/5d0d7d4a-e5d4-4086-80b4-4db29c9f9587)
 
-<details >  <summary> <h2>🔎  시퀀스 다이어그램 </h2></summary> 
+<h1>🔎 시퀀스 다이어그램 </h1> 
 <h3> 로그인 </h3>
  
 ![jpashop 시퀀스 다이어그램](https://github.com/lsh96900410/studyProject/assets/133841235/12d8f41f-e373-44ac-8899-839516b215a5)
@@ -63,7 +63,7 @@
 
 ![쿼리 dsl](https://github.com/lsh96900410/Danaga/assets/133841235/8a38b2af-179a-4d1a-8a43-5c0b2e92be18)
 
-</details>
+
 
 # 🔨 Error 
 
