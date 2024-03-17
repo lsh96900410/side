@@ -105,3 +105,14 @@ deploy.sh 파일에서 8라인까지는 작업 완료된 것을 확인 후, 13 �
 <h3> 4. noSql,ElaticSearch , MSA 아키텍처 훑어보면서 준비 </h3>
 <h3> 5. 트랜잭션 계좌 프로젝트 연습 후 여따 적용해보기 </h3>
 
+<h1> 🚴🏻‍♂️ Version 3 ing </h1>
+
+
+<h3> 초기 렌더링은 SSR 사용 이후 요청은 CSR로 구동 속도 올리기 <a href= "https://skydog.tistory.com/2"> [ Blog ] </a> </h3>
+
+<h3>🔎 시퀀스 다이어그램 </h3> 
+
+![SSR+CSR 시퀀스](https://github.com/lsh96900410/TeamProject/assets/133841235/88a32903-7bb6-425e-b998-a730d397c476)
+
+![검색 ajax](https://github.com/lsh96900410/TeamProject/assets/133841235/7c70f870-9ef7-4238-b25d-33500d155436)
+
