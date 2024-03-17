@@ -38,6 +38,7 @@ public class Member {
         this.password=form.getPassword();
         this.address=form.formToAddress();
         this.role="ROLE_USER";
+        this.email=form.getEmail();
     }
 
     @Builder
