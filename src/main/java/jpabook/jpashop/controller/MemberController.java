@@ -1,13 +1,18 @@
 package jpabook.jpashop.controller;
 
+import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.dto.MemberForm;
 import jpabook.jpashop.dto.MemberLogin;
 import jpabook.jpashop.dto.MemberSearch;
+import jpabook.jpashop.dto.ResponseDto;
 import jpabook.jpashop.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,13 +62,16 @@ public class MemberController {
     @GetMapping("/members")
     public String list(@ModelAttribute("memberSearch") MemberSearch memberSearch, Model model) throws AccessDeniedException {
         System.out.println("멤버 컨트롤러 !");
+        System.out.println(memberService.searchMembers(memberSearch).get(0).getUsername());
         model.addAttribute("members",memberService.searchMembers(memberSearch));
         return "members/memberList";
     }
 
-    @GetMapping("/members/search")
-    public @ResponseBody List<Member> list(@ModelAttribute("memberSearch") MemberSearch memberSearch){
-        return memberService.searchMembers(memberSearch);
+    @PostMapping( value="/members/search",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<?> list(@RequestBody MemberSearch memberSearch){
+        ResponseDto responseDto = new ResponseDto() ;
+        responseDto.setData(memberService.searchMembers(memberSearch));
+        return ResponseEntity.status(HttpStatus.OK).body(responseDto);
     }
     @GetMapping("/members/{memberId}")
     public String one(@PathVariable("memberId") Long id , Model model){

@@ -22,4 +22,8 @@ public class Address {
         this.street = street;
         this.zipcode = zipcode;
     }
+
+    public String search(Address address){
+        return address.getCity()+address.getStreet()+address.getZipcode();
+    }
 }
