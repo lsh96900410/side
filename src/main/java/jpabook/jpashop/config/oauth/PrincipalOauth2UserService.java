@@ -5,8 +5,8 @@ import jpabook.jpashop.config.oauth.provider.FacebookUserInfo;
 import jpabook.jpashop.config.oauth.provider.GoogleUserInfo;
 import jpabook.jpashop.config.oauth.provider.NaverUserInfo;
 import jpabook.jpashop.config.oauth.provider.OAuth2UserInfo;
-import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.repository.MemberRepository;
+import jpabook.jpashop.domain.member.MemberRepository;
+import jpabook.jpashop.domain.member.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -39,7 +39,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService{
 		}else {
 		}
 		String password = bCryptPasswordEncoder.encode("skydog");
-		Member findMember = memberRepository.findByName(oAuth2UserInfo.getEmail());
+		Member findMember = memberRepository.findByEmail(oAuth2UserInfo.getEmail());
 
 		if(findMember==null) {
 			Member member=new Member(oAuth2UserInfo,password);

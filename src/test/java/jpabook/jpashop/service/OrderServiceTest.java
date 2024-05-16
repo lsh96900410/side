@@ -1,18 +1,17 @@
 package jpabook.jpashop.service;
 
 import jakarta.persistence.EntityManager;
-import jpabook.jpashop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest
-@Transactional
-class OrderServiceTest {
-
-    @Autowired EntityManager em;
-    @Autowired OrderService orderService;
-    @Autowired OrderRepository orderRepository;
+//@SpringBootTest
+//@Transactional
+//class OrderServiceTest {
+//
+//    @Autowired EntityManager em;
+//    @Autowired OrderService orderService;
+//    @Autowired OrderRepository orderRepository;
 
     // JPA가 잘엮여서 동작하는가가 중점이기에 단위테스트보단 통합적으로 테스트 진행
 //    @Test
@@ -88,4 +87,4 @@ class OrderServiceTest {
 //        return member;
 //    }
 
-}
+// }

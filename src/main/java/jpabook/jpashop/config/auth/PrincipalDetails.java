@@ -1,6 +1,6 @@
 package jpabook.jpashop.config.auth;
 
-import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.domain.member.Member;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 @Data
 public class PrincipalDetails implements UserDetails, OAuth2User {
-
     private final Member member;
     private final Map<String,Object> attributes ;
 
@@ -20,7 +19,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         this.member=member;
         this.attributes=new HashMap<>();
     }
-    public PrincipalDetails(Member member,Map<String, Object> attributes) {
+    public PrincipalDetails(Member member, Map<String, Object> attributes) {
         this.member=member;
         this.attributes=new HashMap<>(attributes);
     }

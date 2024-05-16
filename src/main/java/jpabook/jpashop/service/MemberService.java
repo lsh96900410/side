@@ -1,75 +1,175 @@
 package jpabook.jpashop.service;
 
-import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.dto.MemberForm;
-import jpabook.jpashop.dto.MemberLogin;
-import jpabook.jpashop.dto.MemberSearch;
-import jpabook.jpashop.repository.MemberRepository;
+import jpabook.jpashop.constant.ExceptionType;
+import static jpabook.jpashop.constant.NumberName.*;
+
+import static jpabook.jpashop.constant.LogType.*;
+import jpabook.jpashop.domain.follow.Follow;
+import jpabook.jpashop.domain.follow.FollowRepository;
+import jpabook.jpashop.domain.like.LikeRepository;
+import jpabook.jpashop.domain.member.Member;
+import jpabook.jpashop.domain.member.MemberRepository;
+import jpabook.jpashop.domain.todo.Todo;
+import jpabook.jpashop.domain.todo.TodoRepository;
+import jpabook.jpashop.dtos.ElseDto;
+import jpabook.jpashop.dtos.FormData;
+import jpabook.jpashop.dtos.ResponseDto;
+import jpabook.jpashop.dtos.ServiceDto;
+import jpabook.jpashop.exception.CustomException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final BCryptPasswordEncoder encoder;
+    private final PasswordEncoder bCryptPasswordEncoder;
+    private final FollowRepository followRepository;
+    private final TodoRepository todoRepository;
 
-    /**
-     *  회원 가입
-     */
-    @Transactional 
-    public Long join(MemberForm form){
-        validateDuplicateMember(form.getUsername());
-        form.setPassword(encoder.encode(form.getPassword()));
-        Member saveMember = new Member(form);
-        memberRepository.save(saveMember);
+    /* 프로필 이미지 업로드 */
+    @Transactional
+    public void uploadProfile(Long loginMemberId, MultipartFile file){
+        UUID uuid =UUID.randomUUID();
+        String uploadFileName = uuid + "_" + file.getOriginalFilename();
 
-        return saveMember.getId();
-    }
+        Path imageFilePath = Paths.get(FILE_UPLOAD_FOLDER+ uploadFileName);
 
-    // 2. 회원 전체 조회
-    public List<Member> findMembers(){
-        return memberRepository.findAll();
-    }
 
-    // 3. 회원 조회
-    public Member findOne(Long memberId){
-        return memberRepository.findOne(memberId);
-    }
+        Member loginMember = memberRepository.findById(loginMemberId)
+                .orElseThrow(() -> new CustomException(ExceptionType.NOT_EXIST_MEMBER));
 
-    // 4. 로그인
-    public void login(MemberLogin memberLogin) throws Exception{
-        Member findMember = memberRepository.findByName(memberLogin.getUsername());
+        Path uploadPath = Paths.get(FILE_UPLOAD_FOLDER);
+        /* 기존 업로드 파일 존재한다면 삭제 */
+        if (loginMember.getFileLocation()!=null) {
+            Path oldImageFilePath = Paths.get(FILE_UPLOAD_FOLDER + loginMember.getFileLocation());
 
-            if (findMember==null){
-            throw new UsernameNotFoundException("사용자를 찾을 수 없습니다." + memberLogin.getUsername());
+
+            if (Files.exists(oldImageFilePath)) {
+                try {
+                    Files.delete(oldImageFilePath);
+                    logger.info(SUCCESS_DELETE_OLD_FILE + oldImageFilePath.toString());
+                }catch (IOException e ){
+                    logger.error(ERROR_DELETING_OLD_FILE + e.getMessage());
+                    throw new CustomException(ExceptionType.NOT_DELETE_OLD_FILE);
+                }
             }
-            if(!encoder.matches(memberLogin.getPassword(),findMember.getPassword())){
-                throw new BadCredentialsException("비밀번호가 틀렸습니다.");
-            }
-    }
-
-    // 검색
-    public List<Member> searchMembers(MemberSearch memberSearch){
-        return memberRepository.searchQuery(memberSearch);
-    }
-
-
-    // 중복 회원 검증
-    private void validateDuplicateMember(String name) {
-        Member findMembers = memberRepository.findByName(name);
-        if(findMembers!=null){
-            throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
+        /* 새로운 업로드 파일 저장 */
+        try {
+            if (! Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+                logger.info( CREATE_NEW_DIRECTORY + imageFilePath);
+            }
+
+            Files.write(imageFilePath, file.getBytes());
+            logger.info(SUCCESS_UPLOAD_NEW_FILE+imageFilePath.toString());
+
+        }catch(IOException e){
+            logger.error(ExceptionType.FILE_UPLOAD_FAILED +e.getMessage());
+            throw new CustomException(ExceptionType.FILE_UPLOAD_FAILED);
+        }
+
+        loginMember.uploadProfileImageLocation(uploadFileName);
+    }
+    
+    /* 회원 피드 */
+    @Transactional
+    public ResponseDto.MemberFeed find(Long id,Long loginMemberId){
+
+        ResponseDto.MemberFeed settingDto = new ResponseDto.MemberFeed();
+        Optional<Follow> checkFollow = followRepository.findByFollowingIdAndFollowerId(id,loginMemberId);
+        int totalFollowerCount = followRepository.countByFollowerId(id);
+        int totalFollowingCount = followRepository.countByFollowingId(id);
+
+        checkFollow.ifPresent( isFollowed -> { settingDto.changFollowState() ;});
+
+        /* Member Data Setting */
+        Member member = memberRepository.findById(id)
+                .orElseThrow( () -> new CustomException(ExceptionType.NOT_EXIST_MEMBER));
+
+        if(id!=loginMemberId){
+            member.upViewCount();
+        }
+
+        settingDto.settingMemberData(member,totalFollowingCount,totalFollowerCount);
+
+        List<Member> getTopMembers = memberRepository.findTop6ByOrderByTotalViewCountDesc();
+
+        /* Top Member */
+        List<ServiceDto.TopMember> topMembers =
+                getTopMembers.stream().map(topMember ->
+                        new ServiceDto.TopMember(topMember)).collect(Collectors.toList());
+
+        settingDto.setTopMembers(topMembers);
+
+        /* Todo Data Setting */
+
+        List<Todo> byMemberId = todoRepository.findByMemberIdOrderByCreateDateDesc(id);
+        List<ResponseDto.FindTodo> todos =
+                byMemberId.stream().map(todo ->
+                        new ResponseDto.FindTodo(todo)).collect(Collectors.toList());
+
+        settingDto.settingTodosData(todos);
+
+        /* Else Data Setting */
+        List<Member> byDeveloperPosition = memberRepository.findByDeveloperPosition(member.getDeveloperPosition());
+
+        List<ElseDto.SameDevPositionOtherMember> members =
+                byDeveloperPosition.stream().map(elseMember ->
+                        new ElseDto.SameDevPositionOtherMember(elseMember)).collect(Collectors.toList());
+
+        settingDto.settingElseMembersData(members);
+
+//        if(!byMemberId.isEmpty()) {
+//            List<Todo> byKeywordId = todoRepository.findByKeywordId(byMemberId.get((int)Math.random()*byMemberId.size()).getKeyword().getId());
+//
+//            List<ElseDto.SameKeywordOtherTodo> elseTodos =
+//                    byKeywordId.stream().map(elseTodo ->
+//                            new ElseDto.SameKeywordOtherTodo(elseTodo)).collect(Collectors.toList());
+//
+//            settingDto.settingElseKeywordData(elseTodos);
+//        }
+
+        return settingDto;
+    }
+
+    /* 회원 가입 */
+    public void join(FormData.Join joinData){
+        validateDuplicate(joinData.getUsername());
+
+        Member joinMember = new Member(joinData,bCryptPasswordEncoder);
+
+        memberRepository.save(joinMember);
+
+    }
+
+    public long[] count(){
+        long[] counts = {memberRepository.count(),todoRepository.count()};
+        return counts;
     }
 
 
+    /* 회원 아이디 중복 체크 */
+    private void validateDuplicate(String username){
+        Optional<Member> memberByUsername = memberRepository.findByUsername(username);
+
+        memberByUsername.ifPresent(t -> {
+            throw new IllegalStateException("이미 존재하는 회원입니다.");
+        });
+    }
 }

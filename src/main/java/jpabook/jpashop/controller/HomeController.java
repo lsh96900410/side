@@ -1,27 +1,28 @@
 package jpabook.jpashop.controller;
 
-import jakarta.servlet.http.HttpSession;
+import jpabook.jpashop.dtos.ResponseDto;
 import jpabook.jpashop.service.MemberService;
+import jpabook.jpashop.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.rmi.AccessException;
 
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final MemberService memberService;
+    private final TodoService todoService;
 
     @RequestMapping("/")
-    public String home(){
-        return "home";
-    }
+   public String home(Model model){
+        ResponseDto.TodoList todos = todoService.findTodos();
+
+        model.addAttribute("todos",todos);
+        return "todo/list";
+   }
 
 
 }

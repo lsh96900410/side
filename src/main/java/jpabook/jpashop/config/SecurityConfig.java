@@ -1,25 +1,16 @@
 package jpabook.jpashop.config;
 
-import jpabook.jpashop.config.auth.PrincipalDetailsService;
+import jpabook.jpashop.config.hanlder.CustomAuthenticationEntryPoint;
 import jpabook.jpashop.config.oauth.PrincipalOauth2UserService;
-import jpabook.jpashop.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -35,13 +26,20 @@ public class SecurityConfig {
         http.csrf(CsrfConfigurer::disable);
         //접근 권한 설정
         http.authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/orders/{orderId}/cancel","/orders").hasAnyRole("ADMIN","MANAGER")
+                .requestMatchers("/todo/search").permitAll()
+                .requestMatchers("/members/{memberId}","members/logout","/todo/{todoId}").authenticated()
                 .anyRequest().permitAll());
-        
+
+//                .requestMatchers("/orders/{orderId}/cancel","/orders").hasAnyRole("ADMIN","MANAGER")
+
+
+
         // 로그인 설정
         http.formLogin(customizer -> customizer
-                .loginPage("/members/login").loginProcessingUrl("/members/login")
-                .failureHandler(customFailureHandler).defaultSuccessUrl("/"));
+                .loginPage("/members/login").permitAll().loginProcessingUrl("/members/login")
+//                .successHandler(new CustomSuccessHandler())
+                .failureHandler(customFailureHandler).failureUrl("/members/sign")
+                .defaultSuccessUrl("/todo"));
 
         // 소셜 로그인 설정
         http.oauth2Login(oauth2Customizer ->
@@ -51,9 +49,13 @@ public class SecurityConfig {
         
         // 권한 예외 설정
         http.exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
-                httpSecurityExceptionHandlingConfigurer.accessDeniedHandler((request, response, accessDeniedException) -> {
-                    response.sendRedirect("/403.html");
-                }));
+                httpSecurityExceptionHandlingConfigurer
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                        .accessDeniedHandler(
+                                (request, response, accessDeniedException) -> {response.sendRedirect("/403.html");})
+
+                        );
+
         return http.build();
     }
 
