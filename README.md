@@ -4,7 +4,7 @@
  <a href= "https://skydog.tistory.com/10"> [ Blog ] </a>
 ### 2. Magic Number,literal - Constant Class , Enum Class
  <a href= "https://skydog.tistory.com/9"> [ Blog ] </a>
-### 3. Stream vs for : stream - Collection Data 가독성 증가 
+### 3. Stream vs for : stream - 가독성 측면 고려  
 
 <img src="https://github.com/lsh96900410/banking-/assets/133841235/3553084b-dab1-44c8-9ce3-cc07cbe4e252" width="495" height="500" /> 
 <img src="https://github.com/lsh96900410/banking-/assets/133841235/899efe59-ca6b-4963-806d-b4a659a809fd" width="495" height="500" /> <br/><br>
