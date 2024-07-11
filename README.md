@@ -1,3 +1,44 @@
+# 코드 관련 개선 사항 
+
+### 1. Dto Class 관리 방법 - Inner Class  
+ <a href= "https://skydog.tistory.com/10"> [ Blog ] </a>
+### 2. Magic Number,literal - Constant Class , Enum Class
+ <a href= "https://skydog.tistory.com/9"> [ Blog ] </a>
+### 3. Stream vs for : stream - 가독성 측면 고려  
+
+<img src="https://github.com/lsh96900410/banking-/assets/133841235/3553084b-dab1-44c8-9ce3-cc07cbe4e252" width="495" height="500" /> 
+<img src="https://github.com/lsh96900410/banking-/assets/133841235/899efe59-ca6b-4963-806d-b4a659a809fd" width="495" height="500" /> <br/><br>
+
+### Code 
+![실제 코드](https://github.com/lsh96900410/banking-/assets/133841235/4dc847e1-0441-483f-a02a-99a2ba61739f)
+  
+![넘버네임](https://github.com/lsh96900410/banking-/assets/133841235/131bd17e-eadf-444d-b1e0-553aef89425b)
+### Inner Class - 역할.Name 형식의 네이밍 방식 : DTO Class 명확한 네이밍 가능 + 하나의 클래스에서 관리 가능 
+![Inner Class](https://github.com/lsh96900410/banking-/assets/133841235/18221f1b-fbf3-4e60-81c9-b3e579fd9ce4)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 프로젝트 간단 소개
 **교육 과정 수료 후, 프로젝트에 있어 기능 구현 이외에도 중요한 것들이 많다고 느꼈습니다.** 
 
