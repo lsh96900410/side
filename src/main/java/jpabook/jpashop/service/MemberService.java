@@ -3,10 +3,8 @@ package jpabook.jpashop.service;
 import jpabook.jpashop.constant.ExceptionType;
 import static jpabook.jpashop.constant.NumberName.*;
 
-import static jpabook.jpashop.constant.LogType.*;
 import jpabook.jpashop.domain.follow.Follow;
 import jpabook.jpashop.domain.follow.FollowRepository;
-import jpabook.jpashop.domain.like.LikeRepository;
 import jpabook.jpashop.domain.member.Member;
 import jpabook.jpashop.domain.member.MemberRepository;
 import jpabook.jpashop.domain.todo.Todo;
@@ -23,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -62,9 +59,7 @@ public class MemberService {
             if (Files.exists(oldImageFilePath)) {
                 try {
                     Files.delete(oldImageFilePath);
-                    logger.info(SUCCESS_DELETE_OLD_FILE + oldImageFilePath.toString());
                 }catch (IOException e ){
-                    logger.error(ERROR_DELETING_OLD_FILE + e.getMessage());
                     throw new CustomException(ExceptionType.NOT_DELETE_OLD_FILE);
                 }
             }
@@ -73,14 +68,11 @@ public class MemberService {
         try {
             if (! Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
-                logger.info( CREATE_NEW_DIRECTORY + imageFilePath);
             }
 
             Files.write(imageFilePath, file.getBytes());
-            logger.info(SUCCESS_UPLOAD_NEW_FILE+imageFilePath.toString());
 
         }catch(IOException e){
-            logger.error(ExceptionType.FILE_UPLOAD_FAILED +e.getMessage());
             throw new CustomException(ExceptionType.FILE_UPLOAD_FAILED);
         }
 
@@ -108,42 +100,26 @@ public class MemberService {
 
         settingDto.settingMemberData(member,totalFollowingCount,totalFollowerCount);
 
-        List<Member> getTopMembers = memberRepository.findTop6ByOrderByTotalViewCountDesc();
-
         /* Top Member */
+        List<Member> getTopMembers = memberRepository.findTop6ByOrderByTotalViewCountDesc();
         List<ServiceDto.TopMember> topMembers =
                 getTopMembers.stream().map(topMember ->
                         new ServiceDto.TopMember(topMember)).collect(Collectors.toList());
 
-        settingDto.setTopMembers(topMembers);
-
         /* Todo Data Setting */
-
         List<Todo> byMemberId = todoRepository.findByMemberIdOrderByCreateDateDesc(id);
         List<ResponseDto.FindTodo> todos =
                 byMemberId.stream().map(todo ->
                         new ResponseDto.FindTodo(todo)).collect(Collectors.toList());
 
-        settingDto.settingTodosData(todos);
-
         /* Else Data Setting */
-        List<Member> byDeveloperPosition = memberRepository.findByDeveloperPosition(member.getDeveloperPosition());
+        List<Member> byDeveloperPosition = memberRepository.findTop5ByDeveloperPosition(member.getDeveloperPosition());
 
-        List<ElseDto.SameDevPositionOtherMember> members =
+        List<ElseDto.SameDevPosition> sameDevMembers =
                 byDeveloperPosition.stream().map(elseMember ->
-                        new ElseDto.SameDevPositionOtherMember(elseMember)).collect(Collectors.toList());
+                        new ElseDto.SameDevPosition(elseMember)).collect(Collectors.toList());
 
-        settingDto.settingElseMembersData(members);
-
-//        if(!byMemberId.isEmpty()) {
-//            List<Todo> byKeywordId = todoRepository.findByKeywordId(byMemberId.get((int)Math.random()*byMemberId.size()).getKeyword().getId());
-//
-//            List<ElseDto.SameKeywordOtherTodo> elseTodos =
-//                    byKeywordId.stream().map(elseTodo ->
-//                            new ElseDto.SameKeywordOtherTodo(elseTodo)).collect(Collectors.toList());
-//
-//            settingDto.settingElseKeywordData(elseTodos);
-//        }
+        settingDto.settingElseData(sameDevMembers,todos,topMembers);
 
         return settingDto;
     }
@@ -162,6 +138,7 @@ public class MemberService {
         long[] counts = {memberRepository.count(),todoRepository.count()};
         return counts;
     }
+
 
 
     /* 회원 아이디 중복 체크 */

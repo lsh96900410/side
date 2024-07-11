@@ -4,16 +4,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 public class FormData {
-
-    @Data
-    public static class Search{
-        private String title;
-    }
 
     @Data
     public static class Login{
@@ -24,26 +17,7 @@ public class FormData {
         private String password;
     }
 
-    @Data
-    public static class ModifyMember{
-        private Long id;
-
-//        @NotBlank(message = "비밀번호는 필수 입력값입니다.")
-//        @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{4,10}"
-//                , message = "비밀번호는 4~10자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
-//        private String password;
-
-        @NotEmpty(message = "이름은 필수 입니다.")
-        private String name;
-
-        private String developerPosition;
-
-        @NotBlank(message = "경력 사항은 필수입니다.")
-        private String career;
-
-    }
-
-    @Getter @Setter
+    @Getter @Setter @AllArgsConstructor @NoArgsConstructor
     public static class Join{
 
         @NotBlank(message = " 아이디는 필수 입력값입니다.")

@@ -30,6 +30,11 @@ dependencies {
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+	/* Redis */
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+
+
 	/* Spring Security + OAuth2 Login*/
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -46,8 +51,10 @@ dependencies {
 	//NoClassDefFoundError(javax.annotation.Generated) 에러 대응 코드
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api" 
 	//NoClassDefFoundError (javax.annotation.Entity) 에러 대응 코드
-	annotationProcessor "jakarta.persistence:jakarta.persistence-api" 
-	
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+
+
 	/* QueryDsl 빌드 옵션 (옵셔널)*/
 	def querydslSrcDir = 'src/main/generated'
 

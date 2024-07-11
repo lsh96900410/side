@@ -22,6 +22,9 @@ else
     sleep 5
 fi
 
+echo "> 기존 JAR 파일 삭제"
+    rm $REPOSITORY/*.jar
+
 echo "> 새 어플리케이션 배포"
 
 JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tail -n 1)

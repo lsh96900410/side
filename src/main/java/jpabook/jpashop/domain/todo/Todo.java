@@ -15,7 +15,8 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@Table(indexes = @Index(name="idx_viewCount_id",columnList = "view_count , todo_id"))
 public class Todo {
 
     @Id
@@ -31,6 +32,8 @@ public class Todo {
 
     private int viewCount ;
 
+    private int likeCount;
+
     @CreationTimestamp
     private LocalDateTime createDate;
 
@@ -38,11 +41,11 @@ public class Todo {
     @OneToMany(mappedBy = "todo")
     private List<Likes> likes = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="keyword_id")
     private Keyword keyword;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id")
     private Member member;
 
@@ -61,6 +64,9 @@ public class Todo {
 //        }
 //    }
 
+    public void upLikeCount(){
+        this.likeCount++;
+    }
     public void upViewCount(){
         System.out.println("upViewCount 로직 전 : "+this.viewCount );
         this.viewCount++;

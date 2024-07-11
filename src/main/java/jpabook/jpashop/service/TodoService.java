@@ -3,23 +3,29 @@ package jpabook.jpashop.service;
 import static jpabook.jpashop.constant.NumberName.*;
 
 import jpabook.jpashop.constant.ExceptionType;
+import jpabook.jpashop.constant.NumberName;
 import jpabook.jpashop.domain.keyword.Keyword;
 import jpabook.jpashop.domain.keyword.KeywordRepository;
 import jpabook.jpashop.domain.like.LikeRepository;
 import jpabook.jpashop.domain.like.Likes;
 import jpabook.jpashop.domain.member.Member;
 import jpabook.jpashop.domain.member.MemberRepository;
+import jpabook.jpashop.domain.todo.FeedQuery;
 import jpabook.jpashop.domain.todo.Todo;
 import jpabook.jpashop.domain.todo.TodoRepository;
-import jpabook.jpashop.dtos.MemberAdapter;
-import jpabook.jpashop.dtos.RequestDto;
-import jpabook.jpashop.dtos.ResponseDto;
-import jpabook.jpashop.dtos.ServiceDto;
+import jpabook.jpashop.dtos.*;
 import jpabook.jpashop.exception.CustomException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.CacheManager;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,6 +38,9 @@ public class TodoService {
     private final KeywordRepository keywordRepository;
     private final MemberRepository memberRepository;
     private final LikeRepository likeRepository;
+    private final RedisTemplate<String,Object> redisTemplate;
+    private final CacheManager cacheManager;
+    private final FeedQuery feedQuery;
 
     public List<ServiceDto.AllTodosDto> searchByTitle(RequestDto.Search search){
 
@@ -51,7 +60,13 @@ public class TodoService {
         Todo findTodo = todoRepository.findById(todoId)
                 .orElseThrow(()-> new CustomException(ExceptionType.NOT_EXIST_TODO));
 
-        ResponseDto.TodoDetail todoDetail = new ResponseDto.TodoDetail(findTodo);
+        List<Todo> top5Todos = todoRepository.findTop5ByOrderByViewCountDesc();
+
+        List<ServiceDto.TopTodo> topTodos =
+                top5Todos.stream().map(topTodo ->
+                        new ServiceDto.TopTodo(topTodo)).collect(Collectors.toList());
+
+        ResponseDto.TodoDetail todoDetail = new ResponseDto.TodoDetail(findTodo,topTodos);
 
         /* 좋아요 기록 체크 */
         Optional<Likes> checkExistLike = likeRepository.findByMemberIdAndTodoId(loginMemberId, todoId);
@@ -65,9 +80,11 @@ public class TodoService {
         }
 
         /* 이전,이후 투두 ID 셋팅*/
-        ResponseDto.TodoDetail resultSideSetting = sideTodoIdSettings(todoDetail);
 
-        return resultSideSetting;
+        ResponseDto.TodoDetail resultTodoDetails = sideTodoIdSettings(todoDetail);
+
+
+        return resultTodoDetails;
     }
 
     /* 이전,이후 TODO ID 세팅 메소드*/
@@ -78,60 +95,68 @@ public class TodoService {
                 .map(Todo::getId)
                 .toList()
                 .indexOf(settingData.getTodoId());
-
-        final int LAST_TODO_POSITION = memberTodoList.size()-1;
-        final int NEXT_INDEX = currentIndex+1;
-        final int PREVIOUS_INDEX = currentIndex-1;
-
+        NumberName numberName = new NumberName(memberTodoList.size()-1,currentIndex);
 
         if(memberTodoList.size() == HAS_SINGLE_TODO){
-            settingData.setNextTodoId(NOT_EXIST_TODO_POSITION);
-            settingData.setPreviousTodoId(NOT_EXIST_TODO_POSITION);
-        }else {
-
-            if (currentIndex == FIRST_TODO_POSITION) {
-                settingData.setNextTodoId(memberTodoList.get(NEXT_INDEX).getId());
-                settingData.setPreviousTodoId(NOT_EXIST_TODO_POSITION);
-            } else if (currentIndex == LAST_TODO_POSITION) {
-                settingData.setPreviousTodoId(memberTodoList.get(PREVIOUS_INDEX).getId());
-                settingData.setNextTodoId(NOT_EXIST_TODO_POSITION);
-            } else {
-                settingData.setNextTodoId(memberTodoList.get(NEXT_INDEX).getId());
-                settingData.setPreviousTodoId(memberTodoList.get(PREVIOUS_INDEX).getId());
-            }
+            return settingData;
         }
+
+        if (currentIndex == FIRST_TODO_POSITION) {
+            settingData.setNextTodoId(memberTodoList.get(numberName.NEXT_INDEX).getId());
+        }
+
+        else if (currentIndex == numberName.LAST_TODO_POSITION) {
+            settingData.setPreviousTodoId(memberTodoList.get(numberName.PREVIOUS_INDEX).getId());
+
+        } else {
+            settingData.sideTodoIdSetting(
+                    memberTodoList.get(numberName.NEXT_INDEX).getId(),
+                    memberTodoList.get(numberName.PREVIOUS_INDEX).getId()
+            );
+
+        }
+
         return settingData;
     }
 
     /* Todo List */
     public ResponseDto.TodoList findTodos(){
-        List<Todo> allTodos = todoRepository.findAll();
+        Pageable pageable = PageRequest.of(0,10,Sort.by(Sort.Direction.DESC,"viewCount"));
 
-        List<ServiceDto.AllTodosDto> findTodos =
-                allTodos.stream().map(todo ->
-                        new ServiceDto.AllTodosDto(todo)).collect(Collectors.toList());
+        Page<Todo> allTodos = todoRepository.findAll(pageable);
 
-        List<Member> getTopMembers = memberRepository.findTop6ByOrderByTotalViewCountDesc();
-
-        List<ServiceDto.TopMember> topMembers =
-                getTopMembers.stream().map(topMember ->
-                        new ServiceDto.TopMember(topMember)).collect(Collectors.toList());
-
-
-        List<Todo> top5Todos = todoRepository.findTop5ByOrderByViewCountDesc();
+        Page<ServiceDto.AllTodosDto> pagingTodo = allTodos.map(todo -> new ServiceDto.AllTodosDto(todo));
 
         List<ServiceDto.TopTodo> topTodos =
-                top5Todos.stream().map(topTodo ->
-                        new ServiceDto.TopTodo(topTodo)).collect(Collectors.toList());
+                allTodos.stream().limit(5).map(topTodo -> new ServiceDto.TopTodo(topTodo)).collect(Collectors.toList());
 
-        ResponseDto.TodoList responseTodos = new ResponseDto.TodoList(findTodos,topMembers,topTodos);
+        RedisDto.Members topMembers= getTopMembers();
 
-        return responseTodos;
+        return new ResponseDto.TodoList(pagingTodo,topMembers.getMembers(),topTodos);
+    }
+
+    @Transactional
+    public RedisDto.Members getTopMembers(){
+        String cacheKey = "topMembers::top";
+        RedisDto.Members cachedMembers = cacheManager.getCache("topMembers").get(cacheKey, RedisDto.Members.class);
+
+        if (cachedMembers != null) {
+            return cachedMembers;
+        }
+
+        List<Member> topMembers = memberRepository.findTop6ByOrderByTotalViewCountDesc();
+
+        List<ServiceDto.TopMember> collect = topMembers.stream()
+                .map(topMember -> new ServiceDto.TopMember(topMember))
+                .collect(Collectors.toList());
+
+        RedisDto.Members members = new RedisDto.Members(collect);
+        cacheManager.getCache("topMembers").put(cacheKey, members);
+        return members;
     }
 
 
     /* Todo 생성 */
-
     @Transactional
     public void createTodo(String title, String keyword, MemberAdapter loginMember){
         Optional<Keyword> existCheckKeyword = keywordRepository.findByName(keyword);

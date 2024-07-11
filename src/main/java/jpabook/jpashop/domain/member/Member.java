@@ -6,10 +6,8 @@ import jpabook.jpashop.domain.follow.Follow;
 import jpabook.jpashop.domain.like.Likes;
 import jpabook.jpashop.domain.todo.Todo;
 import jpabook.jpashop.dtos.FormData;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
@@ -18,7 +16,10 @@ import java.util.List;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@Table(name = "member", indexes = {
+        @Index(name = "idx_sign_up_date", columnList = "sign_up_date")
+})
 public class Member {
 
     @Id
@@ -42,6 +43,8 @@ public class Member {
 
     private int totalViewCount=0;
 
+    @Setter
+    @CreationTimestamp
     private LocalDate signUpDate;
 
 

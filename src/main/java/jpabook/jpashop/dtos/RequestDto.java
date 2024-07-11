@@ -9,20 +9,6 @@ import java.util.List;
 public class RequestDto {
 
     @Data
-    public static class CreateTodo {
-        private String todoTitle;
-
-        private String keyword ;
-    }
-
-    @Data
-    public static class CreateTodoPost {
-        private Long id;
-
-        private String postText;
-    }
-
-    @Data
     public static class Like {
         private Long todoId;
     }

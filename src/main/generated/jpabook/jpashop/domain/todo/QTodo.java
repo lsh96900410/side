@@ -32,6 +32,8 @@ public class QTodo extends EntityPathBase<Todo> {
 
     public final jpabook.jpashop.domain.keyword.QKeyword keyword;
 
+    public final NumberPath<Integer> likeCount = createNumber("likeCount", Integer.class);
+
     public final ListPath<jpabook.jpashop.domain.like.Likes, jpabook.jpashop.domain.like.QLikes> likes = this.<jpabook.jpashop.domain.like.Likes, jpabook.jpashop.domain.like.QLikes>createList("likes", jpabook.jpashop.domain.like.Likes.class, jpabook.jpashop.domain.like.QLikes.class, PathInits.DIRECT2);
 
     public final jpabook.jpashop.domain.member.QMember member;

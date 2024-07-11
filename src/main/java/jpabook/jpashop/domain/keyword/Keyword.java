@@ -20,10 +20,8 @@ public class Keyword {
 
     private String name;
 
-
     @OneToMany(mappedBy = "keyword",cascade = CascadeType.ALL)
     private List<Todo> todos = new ArrayList<>();
-
 
     public Keyword(String name){
         this.name=name;

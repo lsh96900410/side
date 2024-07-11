@@ -44,10 +44,9 @@ public class MemberController {
     @PostMapping("/upload")
     public @ResponseBody ResponseEntity uploadMemberImage(@AuthenticationPrincipal MemberAdapter memberAdapter, @RequestParam("file")MultipartFile file){
 
-
         memberService.uploadProfile(memberAdapter.getMember().getId(), file);
 
-        return ResponseEntity.status(HttpStatus.OK).body(" 업로드 성공 ~~ ");
+        return ResponseEntity.status(HttpStatus.OK).body("ok");
     }
 
 
@@ -60,15 +59,15 @@ public class MemberController {
         return "members/myHome";
     }
 
-//    @PostMapping
-//    public String join(@Valid FormData.Join joinForm, BindingResult result){
-//        if(result.hasErrors()){
-//            return "members/joinForm";
-//        }
-//        memberService.join(joinForm);
-//
-//        return "redirect:/sign";
-//    }
+    @PostMapping
+    public String join(@Valid FormData.Join joinForm, BindingResult result){
+        if(result.hasErrors()){
+            return "members/joinForm";
+        }
+        memberService.join(joinForm);
+
+        return "redirect:/members/sign";
+    }
 
 
     @GetMapping("/sign")

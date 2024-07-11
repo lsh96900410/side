@@ -98,7 +98,8 @@
                             <div class="usr-question">
                                 <!-- 회원 이미지 부분  -->
                                 <div class="usr_img">
-                                    <img src="/images/resources/usrr-img1.png" alt="" >
+                                    <img src="/images/resources/usrr-img1.png" alt="" th:src="|/memberProfileUpload/${todo.profile}|"
+                                         style="width: 80px; height: 80px; object-fit: cover;">
                                 </div>
 
                                 <!-- ㄹㅇ 투두리스트 필요 부분  -->
@@ -218,10 +219,10 @@
                                     <i class="fas fa-heart"></i>
                                     <span th:text="${todo.likeCount}">1185</span>
                                 </li>
-                                <li>
-                                    <i class="fa fa-comment"></i>
-                                    <span>1165</span>
-                                </li>
+<!--                                <li>-->
+<!--                                    <i class="fa fa-comment"></i>-->
+<!--                                    <span>1165</span>-->
+<!--                                </li>-->
                                 <li>
                                     <i class="fa fa-eye"></i>
                                     <span th:text="${todo.viewCount}">1009</span>
@@ -231,62 +232,83 @@
 
 
                         <!-- Todo 이번 주 가장 뭐 베스트..멤버....나 ..투두리스트 보여주깅  -->
-                        <div class="widget widget-user">
-                            <h3 class="title-wd">Top User of the Week</h3>
+                        <div class="widget widget-user" >
+                            <h3 class="title-wd"> 가장 많이 봤어요 </h3>
 
                             <!-- 실제 데이터들 보여줄 부분 -->
-                            <ul>
+                            <ul th:each=" data : ${todo.topTodos}">
+<!--                                <li>-->
+<!--                                    <div class="usr-msg-details">-->
+<!--                                        <div class="usr-ms-img">-->
+<!--                                            <img src="/images/resources/m-img1.png"  alt="">-->
+<!--                                        </div>-->
+<!--                                        <div class="usr-mg-info">-->
+<!--                                            <h3>Jessica William</h3>-->
+<!--                                            <p>Graphic Designer </p>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <span><img src="images/price1.png" alt="">1185</span>-->
+<!--                                </li>-->
+<!--                                <div class="widget widget-jobs">-->
+<!--                                    <div class="sd-title">-->
+<!--                                        <h3> 가장 많이 봤어요 </h3>-->
+<!--                                        <i class="la la-ellipsis-v"></i>-->
+<!--                                    </div>-->
+<!--                                    <div class="jobs-list" style="cursor: pointer">-->
+<!--                                        <div class="job-info" th:each="topView : ${todos.topTodos}">-->
+<!--                                            <div class="job-details">-->
+<!--                                                <h3 th:text="${topView.title}" th:onclick="'topViewDetail('+${topView.todoId}+')'"> Senior Product Designer</h3>-->
+<!--                                            </div>-->
+<!--                                            <div class="hr-rate" style="white-space: nowrap">-->
+<!--                                                <span th:text="${topView.keyword}" style="color: white; background-color: #b7ce1f; padding: 5px 10px; border-radius: 10px; display: inline-block;">$25/hr</span>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+
+<!--                                    </div>-->
+<!--                                    &lt;!&ndash;jobs-list end&ndash;&gt;-->
+
+<!--                                </div>-->
                                 <li>
                                     <div class="usr-msg-details">
                                         <div class="usr-ms-img">
-                                            <img src="images/resources/m-img1.png" alt="">
+                                            <img src="images/resources/m-img2.png" th:src="|/memberProfileUpload/${data.image}|" alt=""
+                                                 style="width: 50px; height: 40px; object-fit: cover;">
                                         </div>
                                         <div class="usr-mg-info">
-                                            <h3>Jessica William</h3>
-                                            <p>Graphic Designer </p>
+                                            <h3 th:text="${data.title}">John Doe</h3>
+<!--                                            <p>PHP Developer</p>-->
                                         </div>
                                     </div>
-                                    <span><img src="images/price1.png" alt="">1185</span>
+                                    <div class="hr-rate" style="white-space: nowrap">
+                                        <span th:text="${data.keyword}" style="color: white; background-color: #b7ce1f; padding: 5px 10px; border-radius: 10px; display: inline-block;">$25/hr</span>
+                                    </div>
                                 </li>
 
-                                <li>
-                                    <div class="usr-msg-details">
-                                        <div class="usr-ms-img">
-                                            <img src="images/resources/m-img2.png" alt="">
-                                        </div>
-                                        <div class="usr-mg-info">
-                                            <h3>John Doe</h3>
-                                            <p>PHP Developer</p>
-                                        </div>
-                                    </div>
-                                    <span><img src="images/price2.png" alt="">1165</span>
-                                </li>
+<!--                                <li>-->
+<!--                                    <div class="usr-msg-details">-->
+<!--                                        <div class="usr-ms-img">-->
+<!--                                            <img src="images/resources/m-img3.png" alt="">-->
+<!--                                        </div>-->
+<!--                                        <div class="usr-mg-info">-->
+<!--                                            <h3>Poonam</h3>-->
+<!--                                            <p>Wordpress Developer </p>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <span><img src="images/price3.png" alt="">1120</span>-->
+<!--                                </li>-->
 
-                                <li>
-                                    <div class="usr-msg-details">
-                                        <div class="usr-ms-img">
-                                            <img src="images/resources/m-img3.png" alt="">
-                                        </div>
-                                        <div class="usr-mg-info">
-                                            <h3>Poonam</h3>
-                                            <p>Wordpress Developer </p>
-                                        </div>
-                                    </div>
-                                    <span><img src="images/price3.png" alt="">1120</span>
-                                </li>
-
-                                <li>
-                                    <div class="usr-msg-details">
-                                        <div class="usr-ms-img">
-                                            <img src="images/resources/m-img4.png" alt="">
-                                        </div>
-                                        <div class="usr-mg-info">
-                                            <h3>Bill Gates</h3>
-                                            <p>C & C++ Developer </p>
-                                        </div>
-                                    </div>
-                                    <span><img src="images/price4.png" alt="">1009</span>
-                                </li>
+<!--                                <li>-->
+<!--                                    <div class="usr-msg-details">-->
+<!--                                        <div class="usr-ms-img">-->
+<!--                                            <img src="images/resources/m-img4.png" alt="">-->
+<!--                                        </div>-->
+<!--                                        <div class="usr-mg-info">-->
+<!--                                            <h3>Bill Gates</h3>-->
+<!--                                            <p>C & C++ Developer </p>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <span><img src="images/price4.png" alt="">1009</span>-->
+<!--                                </li>-->
 
                             </ul>
                         </div><!-- 이번주 가장 베스트 유저 뭐 그런 부분 종료 -->

@@ -10,30 +10,7 @@ import lombok.NoArgsConstructor;
 public class ServiceDto {
 
     @Data
-    public static class FindMember {
-        private Long id;
-
-        private String name;
-
-        private String developerPosition;
-
-        private String career;
-
-        private int totalFollowingCount;
-
-        private int totalFollowerCount;
-
-        public FindMember(Member member){
-            this.id= member.getId();
-            this.name=getName();
-            this.developerPosition=member.getDeveloperPosition();
-            this.career=member.getCareer();
-            this.totalFollowingCount=member.getFollowings().size();
-            this.totalFollowerCount=member.getFollows().size();
-        }
-    }
-
-    @Data
+    @NoArgsConstructor
     public static class AllTodosDto{
         private Long todoId;
 
@@ -51,12 +28,23 @@ public class ServiceDto {
             this.todoTitle=todo.getTitle();
             this.keyword=todo.getKeyword().getName();
             this.viewCount=todo.getViewCount();
-            this.likeCount=todo.getLikes().size();
+            this.likeCount=todo.getLikeCount();
             this.profileImage = todo.getMember().getFileLocation();
+        }
+
+        public AllTodosDto(FeedDto feedDto){
+            this.todoId=feedDto.getTodoId();
+            this.todoTitle=feedDto.getTodoTitle();
+            this.keyword=feedDto.getKeywordName();
+            this.viewCount=feedDto.getViewCount();
+            this.likeCount=feedDto.getLikeCount();
+            this.profileImage=feedDto.getFileLocation();
         }
     }
 
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class TopMember{
         private Long memberId;
         private String name;
@@ -72,15 +60,24 @@ public class ServiceDto {
     }
 
     @Data
+    @NoArgsConstructor
     public static class TopTodo{
         private Long todoId;
         private String title;
         private String keyword;
-
+        private String image;
         public TopTodo(Todo todo){
             this.todoId=todo.getId();
             this.title=todo.getTitle();
             this.keyword=todo.getKeyword().getName();
+            this.image=todo.getMember().getFileLocation();
+        }
+
+        public TopTodo(FeedDto feedDto){
+            this.todoId=feedDto.getTodoId();
+            this.title=feedDto.getTodoTitle();
+            this.keyword=feedDto.getKeywordName();
+            this.image=feedDto.getFileLocation();
         }
     }
 
@@ -90,8 +87,6 @@ public class ServiceDto {
         private String memberName;
         private String message;
         private String image;
-        private String todoTitle;
-        private Long todoId;
 
         public GetAlarm(Alarm alarm){
             this.memberId=alarm.getFromMember().getId();

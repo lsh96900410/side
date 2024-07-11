@@ -35,9 +35,11 @@ public class TodoController {
 
     @GetMapping()
     public String list(Model model){
+        //long startNotCache = System.currentTimeMillis();
         ResponseDto.TodoList todos = todoService.findTodos();
-
         model.addAttribute("todos",todos);
+        //long endNotCache = System.currentTimeMillis();
+        //System.out.println("@@@ 캐시 테스팅 : " + (endNotCache - startNotCache) + " ms");
         return "todo/list";
     }
 

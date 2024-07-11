@@ -19,7 +19,6 @@ public class HomeController {
     @RequestMapping("/")
    public String home(Model model){
         ResponseDto.TodoList todos = todoService.findTodos();
-
         model.addAttribute("todos",todos);
         return "todo/list";
    }
